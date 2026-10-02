@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 public class PatronFetcher {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PATRONS_URL =
-            "https://raw.githubusercontent.com/DawnOfTimeMC/patreon_list/main/patrons.json";
+            "https://raw.githubusercontent.com/Dawn-of-Time-Project/patreon_list/main/patrons.json";
     private static final int TIMEOUT_MS = 5000;
 
     public static void fetchAndApply(UUID playerUuid) {

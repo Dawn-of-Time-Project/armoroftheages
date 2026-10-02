@@ -5,10 +5,10 @@
   <img src="https://i.imgur.com/NpfnNgr.gif" alt="Armor of the Ages showcase">
   <br><br>
 
-[![Discord](https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white&labelColor=0d1117)](https://discord.gg/k4gN2b7Zam)
-[![CurseForge](https://img.shields.io/badge/curseforge-download-F16436?style=flat-square&logo=curseforge&logoColor=white&labelColor=0d1117)](https://www.curseforge.com/minecraft/mc-mods/armor-of-the-ages)
-[![Modrinth](https://img.shields.io/badge/modrinth-download-1bd96a?style=flat-square&logo=modrinth&logoColor=white&labelColor=0d1117)](https://modrinth.com/mod/armor-of-the-ages)
-[![Patreon](https://img.shields.io/badge/support-patreon-FF424D?style=flat-square&logo=patreon&logoColor=white&labelColor=0d1117)](https://www.patreon.com/cw/dawnoftimemod)
+  [![Discord](https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white&labelColor=0d1117)](https://discord.gg/k4gN2b7Zam)
+  [![CurseForge](https://img.shields.io/badge/curseforge-download-F16436?style=flat-square&logo=curseforge&logoColor=white&labelColor=0d1117)](https://www.curseforge.com/minecraft/mc-mods/armor-of-the-ages)
+  [![Modrinth](https://img.shields.io/badge/modrinth-download-1bd96a?style=flat-square&logo=modrinth&logoColor=white&labelColor=0d1117)](https://modrinth.com/mod/armor-of-the-ages)
+  [![Patreon](https://img.shields.io/badge/support-patreon-FF424D?style=flat-square&logo=patreon&logoColor=white&labelColor=0d1117)](https://www.patreon.com/cw/dawnoftimemod)
 
 </div>
 
@@ -167,13 +167,13 @@ Minecraft logs a warning and skips the recipe. The game loads normally, this is 
 
 ## Credits
 
-- Development, models and textures by **Poulpinou**.
+- Development, models and textures by **Poulpinou**. 
 - Development and armor skins by **TheGoldenWorld**.
 - Special thanks to **mr_ch0c0late** for the Centurion armor and some extra resources.
 - Special thanks to **Hahdrim** for the Iron Plate armor.
 - [Minecraft Title Generator](https://ewanhowell.com/plugins/minecraft-title-generator/) by Ewan Howell was used for the project name. [Support this guy](https://ko-fi.com/ewanhowell), he's a hero.
 
-*Licensed under [MIT](LICENSE.md)*
+Armor of the Ages is released under the [MIT License](LICENSE.md).
 
 Poulpinou & TheGoldenWorld — Founder of Dawn of Time.
 

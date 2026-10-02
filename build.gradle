@@ -3,7 +3,7 @@ plugins {
     id("net.neoforged.moddev.legacyforge") version "2.0.74" apply(false)
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
     id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0" apply(false)
+    id "me.modmuss50.mod-publish-plugin" version "2.2.1" apply(false)
 }
 
 def patchNoteProvider = providers.provider {
@@ -26,7 +26,8 @@ configure([project(":fabric"), project(":forge")]) {
             projectId = "975288"
             accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
             minecraftVersions.add(project.property("minecraft_version"))
-
+            client = true
+            server = true
             changelogType = "markdown"
 
             requires("yacl")

@@ -23,6 +23,12 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 legacyForge {
@@ -72,6 +78,10 @@ dependencies {
     modRuntimeOnly("curse.maven:jei-238222:5440261") // JEI (Just Enough Items)
     modRuntimeOnly("curse.maven:citadel-331936:5143956") // Citadel
     modRuntimeOnly("curse.maven:rats-323596:4802123") // Rats
+
+    // Epic Fight 20.14.17 (Modrinth version id). Compile only: the compat code is loaded only when the mod is present.
+    modCompileOnly("maven.modrinth:epic-fight:KEBfkBat")
+    modRuntimeOnly("maven.modrinth:epic-fight:KEBfkBat") // lets runClient load Epic Fight for testing
 
     modImplementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-forge")
 }
