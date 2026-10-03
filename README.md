@@ -5,16 +5,16 @@
   <img src="https://i.imgur.com/NpfnNgr.gif" alt="Armor of the Ages showcase">
   <br><br>
 
-[![Discord](https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white&labelColor=0d1117)](https://discord.gg/k4gN2b7Zam)
-[![CurseForge](https://img.shields.io/badge/curseforge-download-F16436?style=flat-square&logo=curseforge&logoColor=white&labelColor=0d1117)](https://www.curseforge.com/minecraft/mc-mods/armor-of-the-ages)
-[![Modrinth](https://img.shields.io/badge/modrinth-download-1bd96a?style=flat-square&logo=modrinth&logoColor=white&labelColor=0d1117)](https://modrinth.com/mod/armor-of-the-ages)
-[![Patreon](https://img.shields.io/badge/support-patreon-FF424D?style=flat-square&logo=patreon&logoColor=white&labelColor=0d1117)](https://www.patreon.com/cw/dawnoftimemod)
+  [![Discord](https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white&labelColor=0d1117)](https://discord.gg/k4gN2b7Zam)
+  [![CurseForge](https://img.shields.io/badge/curseforge-download-F16436?style=flat-square&logo=curseforge&logoColor=white&labelColor=0d1117)](https://www.curseforge.com/minecraft/mc-mods/armor-of-the-ages)
+  [![Modrinth](https://img.shields.io/badge/modrinth-download-1bd96a?style=flat-square&logo=modrinth&logoColor=white&labelColor=0d1117)](https://modrinth.com/mod/armor-of-the-ages)
+  [![Patreon](https://img.shields.io/badge/support-patreon-FF424D?style=flat-square&logo=patreon&logoColor=white&labelColor=0d1117)](https://www.patreon.com/cw/dawnoftimemod)
 
 </div>
 
 **Armor of the Ages** is a Minecraft mod that adds animated armor sets inspired by cultures from across history. Craft the armor of an Egyptian pharaoh, a Roman centurion or a Japanese samurai, and unlock a unique set bonus when you wear the full set.
 
-Minecraft 1.20.1 on **Forge** and **Fabric**. Part of the **[Dawn of Time](https://www.curseforge.com/members/dawnoftime_team/projects)** mod ecosystem.
+Part of the **[Dawn of Time](https://www.curseforge.com/members/dawnoftime_team/projects)** mod ecosystem.
 
 <div align="center"><img src="https://i.imgur.com/yhha6Zo.png"></div>
 
@@ -33,19 +33,19 @@ Minecraft 1.20.1 on **Forge** and **Fabric**. Part of the **[Dawn of Time](https
 
 Every set is crafted from the matching vanilla armor piece surrounded by its own materials. All recipes are visible in the recipe book.
 
-| Set | Inspiration | Crafted from | Set bonus |
-|---|---|---|---|
-| **Iron Plate** | Medieval plate armor | Iron chestplate and iron blocks | **Man of Steel**: Resistance I |
-| **Dō-maru** | Light samurai armor | Leather armor, leather and string | **Night Butterfly**: Speed I at night, Strength I while sneaking |
-| **O-Yoroi** | Heavy samurai armor | Iron armor, coal blocks and redstone blocks | **Ancestral Strength**: Strength I |
-| **Raijin** | Japanese god of thunder | Netherite armor and gold | **Calm as Thunder**: stronger as the weather gets worse |
-| **Centurion** | Roman legionary | Iron armor, gold and red dye | **Spartan Stamina**: Saturation I |
-| **Pharaoh** | Egyptian ruler | Diamond armor, gold blocks and string | **Son of the Dunes**: Fire Resistance, Glowing, Haste I in the desert |
-| **Anubis** | Egyptian god of the dead | Netherite armor, gold, lapis and coal blocks | **Father of the Undead**: Health Boost and Resistance, at the cost of Wither |
-| **Quetzalcoatl** | Aztec feathered serpent | Netherite armor, gold, feathers and bone blocks | **Venom Blood**: Strength grows as your health drops, at the cost of Hunger and Poison |
-| **Holy** | Crusader knight | Netherite armor, iron and gold blocks | **Protector of the Weak**: Resistance I, upgraded with Regeneration when monsters are near |
-| **Exalted Aurum** | Golden abyssal warrior | Netherite armor, gold blocks and red wool | **Creature of the Abyss**: effects change with depth and dimension |
-| **Bamboo Hat** | Rice field farmer | Bamboo | **Spirit of the Field**: Haste I when worn with the O-Yoroi chestplate, leggings and boots |
+| Set | Crafted from | Set bonus |
+|---|---|---|
+| **Iron Plate** | Iron chestplate and iron blocks | **Man of Steel**: Resistance I |
+| **Dō-maru** | Leather armor, leather and string | **Night Butterfly**: Speed I at night, Strength I while sneaking |
+| **O-Yoroi** | Iron armor, coal blocks and redstone blocks | **Ancestral Strength**: Strength I |
+| **Raijin** | Netherite armor and gold | **Calm as Thunder**: stronger as the weather gets worse |
+| **Centurion** | Iron armor, gold and red dye | **Spartan Stamina**: Saturation I |
+| **Pharaoh** | Diamond armor, gold blocks and string | **Son of the Dunes**: Fire Resistance, Glowing, Haste I in the desert |
+| **Anubis** | Netherite armor, gold, lapis and coal blocks | **Father of the Undead**: Health Boost and Resistance, at the cost of Wither |
+| **Quetzalcoatl** | Netherite armor, gold, feathers and bone blocks | **Venom Blood**: Strength grows as your health drops, at the cost of Hunger and Poison |
+| **Holy** | Netherite armor, iron and gold blocks | **Protector of the Weak**: Resistance I, upgraded with Regeneration when monsters are near |
+| **Exalted Aurum** | Netherite armor, gold blocks and red wool | **Creature of the Abyss**: effects change with depth and dimension |
+| **Bamboo Hat** | Bamboo | **Spirit of the Field**: Haste I when worn with the O-Yoroi chestplate, leggings and boots |
 
 <div align="center"><img src="https://i.imgur.com/yhha6Zo.png"></div>
 
@@ -124,7 +124,7 @@ my_datapack/
 ├── pack.mcmeta
 └── data/
     └── armoroftheages/
-        └── recipes/
+        └── recipe/
             └── <recipe_name>.json
 ```
 
@@ -133,17 +133,17 @@ my_datapack/
 ```json
 {
     "pack": {
-        "pack_format": 15,
+        "pack_format": 48,
         "description": "My custom AotA recipes"
     }
 }
 ```
 
-`pack_format: 15` is the correct value for Minecraft 1.20.1.
+`pack_format: 48` is the correct value for Minecraft 1.21.1.
 
 **Installation:** place the datapack folder (or its `.zip`) in `.minecraft/saves/<world_name>/datapacks/` for single player, or in `<server_root>/world/datapacks/` for a server. Then run `/reload` in game or restart the server.
 
-**Override a recipe** by adding a `.json` file with the same name as the original. The full list of recipes is on GitHub: [recipes](https://github.com/DawnOfTimeMC/armoroftheages/tree/1.20.1-master/common/src/main/resources/data/armoroftheages/recipes).
+**Override a recipe** by adding a `.json` file with the same name as the original. The full list of recipes is on GitHub: [recipes](https://github.com/DawnOfTimeMC/armoroftheages/tree/1.21.1/common/src/main/resources/data/armoroftheages/recipe).
 
 **Remove a recipe** by overriding its file with an empty JSON object:
 
@@ -167,13 +167,13 @@ Minecraft logs a warning and skips the recipe. The game loads normally, this is 
 
 ## Credits
 
-- Development, models and textures by **Poulpinou**.
+- Development, models and textures by **Poulpinou**. 
 - Development and armor skins by **TheGoldenWorld**.
 - Special thanks to **mr_ch0c0late** for the Centurion armor and some extra resources.
 - Special thanks to **Hahdrim** for the Iron Plate armor.
 - [Minecraft Title Generator](https://ewanhowell.com/plugins/minecraft-title-generator/) by Ewan Howell was used for the project name. [Support this guy](https://ko-fi.com/ewanhowell), he's a hero.
 
-*Licensed under [MIT](LICENSE.md)*
+Armor of the Ages is released under the [MIT License](LICENSE.md).
 
 Poulpinou & TheGoldenWorld — Founder of Dawn of Time.
 
