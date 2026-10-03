@@ -1,9 +1,11 @@
 package org.dawnoftime.armoroftheages.client;
 
 import net.minecraft.client.Minecraft;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import org.dawnoftime.armoroftheages.CommonClass;
+import org.dawnoftime.armoroftheages.compat.epicfight.EpicFightCompat;
 import org.dawnoftime.armoroftheages.registry.ModelProviderRegistry;
 
 public class ArmorOfTheAgesClientForge {
@@ -23,6 +25,14 @@ public class ArmorOfTheAgesClientForge {
                 event.registerLayerDefinition(slimProvide.getSlimLayerLocation(), slimProvide::createSlimLayer);
             }
         });
+    }
+
+    /**
+     * Epic Fight compatibility, only active when Epic Fight is installed.
+     * @param event Event called.
+     */
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(EpicFightCompat::init);
     }
 
     public static void playerLoggedInEvent(ClientPlayerNetworkEvent.LoggingIn event) {

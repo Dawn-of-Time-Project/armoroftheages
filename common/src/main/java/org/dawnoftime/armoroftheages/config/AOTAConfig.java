@@ -30,6 +30,20 @@ public class AOTAConfig {
     // Preferred Model
     @SerialEntry public PreferredModel preferredModel = PreferredModel.MALE;
 
+    // Armor Effects (set bonuses)
+    @SerialEntry public boolean enableArmorEffects = true;
+    @SerialEntry public boolean enableBambooHatEffects = true;
+    @SerialEntry public boolean enableAnubisEffects = true;
+    @SerialEntry public boolean enableCenturionEffects = true;
+    @SerialEntry public boolean enableExaltedAurumEffects = true;
+    @SerialEntry public boolean enableHolyEffects = true;
+    @SerialEntry public boolean enableIronPlateEffects = true;
+    @SerialEntry public boolean enableJapaneseLightEffects = true;
+    @SerialEntry public boolean enableOYoroiEffects = true;
+    @SerialEntry public boolean enablePharaohEffects = true;
+    @SerialEntry public boolean enableQuetzalcoatlEffects = true;
+    @SerialEntry public boolean enableRaijinEffects = true;
+
     // Armor Skins
     @SerialEntry public OYoroiSkin oYoroiSkin = OYoroiSkin.DEFAULT;
     @SerialEntry public IronPlateSkin ironPlateSkin = IronPlateSkin.DEFAULT;
@@ -165,6 +179,17 @@ public class AOTAConfig {
 
     public static AOTAConfig get() {
         return CONFIG_CLASS_HANDLER.instance();
+    }
+
+    /** Per set armor effect switch, greyed out while the global switch is off. */
+    private static Option<Boolean> effectOption(String setKey, boolean defaultValue, java.util.function.Supplier<Boolean> getter,
+                                                java.util.function.Consumer<Boolean> setter, boolean available) {
+        return Option.<Boolean>createBuilder()
+                .name(Component.translatable("config.armoroftheages.effects." + setKey))
+                .binding(defaultValue, getter, setter)
+                .controller(opt -> new BooleanControllerBuilderImpl(opt).coloured(true).trueFalseFormatter())
+                .available(available)
+                .build();
     }
 
     public static YetAnotherConfigLib createScreen() {
@@ -1097,6 +1122,43 @@ public class AOTAConfig {
                             .available(config.generateArmorLoot)
                             .build();
 
+                    var effectBambooHat = effectOption("bamboo_hat", defaults.enableBambooHatEffects, () -> config.enableBambooHatEffects, v -> config.enableBambooHatEffects = v, config.enableArmorEffects);
+                    var effectAnubis = effectOption("anubis", defaults.enableAnubisEffects, () -> config.enableAnubisEffects, v -> config.enableAnubisEffects = v, config.enableArmorEffects);
+                    var effectCenturion = effectOption("centurion", defaults.enableCenturionEffects, () -> config.enableCenturionEffects, v -> config.enableCenturionEffects = v, config.enableArmorEffects);
+                    var effectExaltedAurum = effectOption("exalted_aurum", defaults.enableExaltedAurumEffects, () -> config.enableExaltedAurumEffects, v -> config.enableExaltedAurumEffects = v, config.enableArmorEffects);
+                    var effectHoly = effectOption("holy", defaults.enableHolyEffects, () -> config.enableHolyEffects, v -> config.enableHolyEffects = v, config.enableArmorEffects);
+                    var effectIronPlate = effectOption("iron_plate", defaults.enableIronPlateEffects, () -> config.enableIronPlateEffects, v -> config.enableIronPlateEffects = v, config.enableArmorEffects);
+                    var effectJapaneseLight = effectOption("japanese_light", defaults.enableJapaneseLightEffects, () -> config.enableJapaneseLightEffects, v -> config.enableJapaneseLightEffects = v, config.enableArmorEffects);
+                    var effectOYoroi = effectOption("o_yoroi", defaults.enableOYoroiEffects, () -> config.enableOYoroiEffects, v -> config.enableOYoroiEffects = v, config.enableArmorEffects);
+                    var effectPharaoh = effectOption("pharaoh", defaults.enablePharaohEffects, () -> config.enablePharaohEffects, v -> config.enablePharaohEffects = v, config.enableArmorEffects);
+                    var effectQuetzalcoatl = effectOption("quetzalcoatl", defaults.enableQuetzalcoatlEffects, () -> config.enableQuetzalcoatlEffects, v -> config.enableQuetzalcoatlEffects = v, config.enableArmorEffects);
+                    var effectRaijin = effectOption("raijin", defaults.enableRaijinEffects, () -> config.enableRaijinEffects, v -> config.enableRaijinEffects = v, config.enableArmorEffects);
+
+                    var enableArmorEffects = Option.<Boolean>createBuilder()
+                            .name(Component.translatable("config.armoroftheages.enable_armor_effects"))
+                            .description(OptionDescription.of(Component.translatable("config.armoroftheages.enable_armor_effects.description")))
+                            .binding(defaults.enableArmorEffects,
+                                    () -> config.enableArmorEffects,
+                                    v -> config.enableArmorEffects = v)
+                            .controller(opt -> new BooleanControllerBuilderImpl(opt).coloured(true).trueFalseFormatter())
+                            .addListener((option, event) -> {
+                                if (event == OptionEventListener.Event.STATE_CHANGE) {
+                                    boolean available = option.pendingValue();
+                                    effectBambooHat.setAvailable(available);
+                                    effectAnubis.setAvailable(available);
+                                    effectCenturion.setAvailable(available);
+                                    effectExaltedAurum.setAvailable(available);
+                                    effectHoly.setAvailable(available);
+                                    effectIronPlate.setAvailable(available);
+                                    effectJapaneseLight.setAvailable(available);
+                                    effectOYoroi.setAvailable(available);
+                                    effectPharaoh.setAvailable(available);
+                                    effectQuetzalcoatl.setAvailable(available);
+                                    effectRaijin.setAvailable(available);
+                                }
+                            })
+                            .build();
+
                     var generateArmorLoot = Option.<Boolean>createBuilder()
                             .name(Component.translatable("config.armoroftheages.generate_armor_loot"))
                             .description(OptionDescription.of(Component.translatable("config.armoroftheages.generate_armor_loot.description")))
@@ -1342,6 +1404,22 @@ public class AOTAConfig {
                                             )
                                             .build()
                             )
+                            .category(ConfigCategory.createBuilder()
+                                    .name(Component.translatable("config.armoroftheages.category.armor_effects"))
+                                    .option(LabelOption.create(Component.translatable("config.armoroftheages.armor_effects_notice")))
+                                    .option(enableArmorEffects)
+                                    .option(effectBambooHat)
+                                    .option(effectAnubis)
+                                    .option(effectCenturion)
+                                    .option(effectExaltedAurum)
+                                    .option(effectHoly)
+                                    .option(effectIronPlate)
+                                    .option(effectJapaneseLight)
+                                    .option(effectOYoroi)
+                                    .option(effectPharaoh)
+                                    .option(effectQuetzalcoatl)
+                                    .option(effectRaijin)
+                                    .build())
                             .category(ConfigCategory.createBuilder()
                                     .name(Component.translatable("config.armoroftheages.category.armor_loot"))
                                     .option(generateArmorLoot)

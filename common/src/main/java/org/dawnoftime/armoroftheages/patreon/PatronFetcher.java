@@ -14,7 +14,7 @@ import java.nio.file.Path;
 public class PatronFetcher {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String REMOTE_URL =
-        "https://raw.githubusercontent.com/DawnOfTimeMC/patreon_list/main/patrons.json";
+        "https://raw.githubusercontent.com/Dawn-of-Time-Project/patreon_list/main/patrons.json";
     private static final int TIMEOUT_MS = 3000;
 
     public static String fetchAndCache(Path cacheFile) {

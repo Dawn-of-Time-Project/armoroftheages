@@ -9,7 +9,12 @@ neoForge {
     // Automatically enable neoforge AccessTransformers if the file exists
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
+        accessTransformers.from(at.absolutePath)
+    }
+    // Epic Fight compat needs raw access to the model cubes, this file is NeoForge only
+    def loaderAt = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (loaderAt.exists()) {
+        accessTransformers.from(loaderAt.absolutePath)
     }
     parchment {
         minecraftVersion = parchment_minecraft
@@ -21,6 +26,12 @@ neoForge {
             url "https://www.cursemaven.com"
             content {
                 includeGroup "curse.maven"
+            }
+        }
+        maven {
+            url "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
             }
         }
     }
@@ -58,6 +69,9 @@ dependencies {
 
     implementation "curse.maven:jei-238222:7014282"
     implementation "thedarkcolour:kotlinforforge-neoforge:5.6.0"
+    // Epic Fight 21.17.3.1 (Modrinth version id). Compile only: the compat code is loaded only when the mod is present.
+    compileOnly "maven.modrinth:epic-fight:8HHhJt6i"
+    runtimeOnly "maven.modrinth:epic-fight:8HHhJt6i" // lets runClient load Epic Fight for testing
     implementation ("dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge")
 }
 

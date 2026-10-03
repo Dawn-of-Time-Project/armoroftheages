@@ -28,7 +28,7 @@ public class ChestJapaneseLightArmorModel<T extends LivingEntity> extends ArmorM
         root.addOrReplaceChild("left_arm", CubeListBuilder.create()
                         .texOffs(24, 0).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, new CubeDeformation(0.3F))
                         .texOffs(12, 16).addBox(1.5F, 3.0F, -2.5F, 2, 5, 5, new CubeDeformation(0.2F)),
-                PartPose.offset(-5.0F, 2.0F, 0.0F));
+                PartPose.offset(5.0F, 2.0F, 0.0F));
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
@@ -44,7 +44,7 @@ public class ChestJapaneseLightArmorModel<T extends LivingEntity> extends ArmorM
         root.addOrReplaceChild("left_arm", CubeListBuilder.create()
                         .texOffs(24, 0).addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, new CubeDeformation(0.3F))
                         .texOffs(12, 16).addBox(0.5F, 3.0F, -2.5F, 2, 5, 5, new CubeDeformation(0.1F)),
-                PartPose.offset(-5.0F, 2.5F, 0.0F));
+                PartPose.offset(5.0F, 2.5F, 0.0F));
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.dawnoftime.armoroftheages.config.AOTAConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -407,6 +408,7 @@ public class ArmorSetEffectHandler {
     }
 
     private static boolean isBambooCombo(Player player) {
+        if (!isEffectEnabled(Constants.BAMBOO_HAT_NAME)) return false;
         return isSpecificItem(player.getItemBySlot(EquipmentSlot.HEAD),  Constants.BAMBOO_HAT_NAME)
             && isArmorPiece(player.getItemBySlot(EquipmentSlot.CHEST), Constants.O_YOROI_ARMOR_NAME, EquipmentSlot.CHEST)
             && isArmorPiece(player.getItemBySlot(EquipmentSlot.LEGS),  Constants.O_YOROI_ARMOR_NAME, EquipmentSlot.LEGS)
@@ -461,7 +463,29 @@ public class ArmorSetEffectHandler {
         }
     }
 
+    /** Global switch AND the per set switch must both be on. */
+    private static boolean isEffectEnabled(String setName) {
+        AOTAConfig config = AOTAConfig.get();
+        if (!config.enableArmorEffects) return false;
+        return switch (setName) {
+            case Constants.BAMBOO_HAT_NAME -> config.enableBambooHatEffects;
+            case Constants.ANUBIS_ARMOR_NAME -> config.enableAnubisEffects;
+            case Constants.CENTURION_ARMOR_NAME -> config.enableCenturionEffects;
+            case Constants.EXALTED_AURUM_ARMOR_NAME -> config.enableExaltedAurumEffects;
+            case Constants.HOLY_ARMOR_NAME -> config.enableHolyEffects;
+            case Constants.IRON_PLATE_ARMOR_NAME -> config.enableIronPlateEffects;
+            case Constants.JAPANESE_LIGHT_ARMOR_NAME -> config.enableJapaneseLightEffects;
+            case Constants.O_YOROI_ARMOR_NAME -> config.enableOYoroiEffects;
+            case Constants.PHARAOH_ARMOR_NAME -> config.enablePharaohEffects;
+            case Constants.QUETZALCOATL_ARMOR_NAME -> config.enableQuetzalcoatlEffects;
+            case Constants.RAIJIN_ARMOR_NAME -> config.enableRaijinEffects;
+            default -> true;
+        };
+    }
+
     private static boolean isWearingFullSet(Player player, String setName) {
+        // Master switch: when disabled every set reads as not worn, so active effects are cleaned up
+        if (!isEffectEnabled(setName)) return false;
         return isArmorPiece(player.getItemBySlot(EquipmentSlot.HEAD),  setName, EquipmentSlot.HEAD)
             && isArmorPiece(player.getItemBySlot(EquipmentSlot.CHEST), setName, EquipmentSlot.CHEST)
             && isArmorPiece(player.getItemBySlot(EquipmentSlot.LEGS),  setName, EquipmentSlot.LEGS)

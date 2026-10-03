@@ -3,7 +3,7 @@ plugins {
     id 'fabric-loom' version '1.10.2' apply false
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
     id 'net.neoforged.moddev' version '2.0.105' apply false
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0" apply false
+    id "me.modmuss50.mod-publish-plugin" version "2.2.1" apply false
 }
 
 def patchNoteProvider = providers.provider {
@@ -26,11 +26,11 @@ configure([project(":fabric"), project(":neoforge")]) {
             projectId = "975288"
             accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
             minecraftVersions.add(project.property("minecraft_version"))
-
+            client = true
+            server = true
             changelogType = "markdown"
 
             requires("yacl")
-
         }
 
         modrinth {
@@ -39,7 +39,6 @@ configure([project(":fabric"), project(":neoforge")]) {
             minecraftVersions.add(project.property("minecraft_version"))
 
             requires("yacl")
-
         }
     }
 }
