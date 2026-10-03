@@ -26,7 +26,7 @@ public class PatronSyncHandler {
             PatronConfig.load(cacheFile);
             int tier = PatronConfig.getPlayerMaxTier(player.getStringUUID());
             // Dispatch back to server tick thread before sending packet
-            player.getServer().execute(() ->
+            player.level().getServer().execute(() ->
                 CommonClass.CONFIG_SYNC_HANDLER.sendPatronTierToPlayer(player, tier)
             );
         });

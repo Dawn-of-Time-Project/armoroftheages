@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestExaltedAurumArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestExaltedAurumArmorModel extends ArmorModel {
     private final ModelPart ring;
     private final ModelPart rightDeco;
     private final ModelPart rightHang;
@@ -27,8 +27,8 @@ public class ChestExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMo
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestExaltedAurumArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestExaltedAurumArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -111,7 +111,7 @@ public class ChestExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMo
         left_arm.addOrReplaceChild("LeftArm_r6", CubeListBuilder.create().texOffs(0, 7).addBox(-2.0F, -1.0F, -1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 1.75F, -3.375F, 0.3109F, -0.8656F, -0.0694F));
         left_arm.addOrReplaceChild("LeftArm_r7", CubeListBuilder.create().texOffs(83, 10).addBox(-2.0F, -3.5F, -2.55F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(2.9865F, 3.7613F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -192,7 +192,7 @@ public class ChestExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMo
         left_arm.addOrReplaceChild("LeftArm_r6", CubeListBuilder.create().texOffs(27, 5).addBox(-2.0F, -1.0F, -1.0F, 3.0F, 2.0F, 1.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(-1.5F, 2.75F, -2.5F, 0.845F, -0.3772F, -0.9251F));
         left_arm.addOrReplaceChild("LeftArm_r7", CubeListBuilder.create().texOffs(27, 5).addBox(-2.0F, -1.0F, -1.0F, 3.0F, 2.0F, 1.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(-2.0F, 1.75F, -3.375F, 0.3109F, -0.8656F, -0.0694F));
         left_arm.addOrReplaceChild("LeftArm_r8", CubeListBuilder.create().texOffs(81, 10).addBox(-1.0F, -3.5F, -2.55F, 4.0F, 8.0F, 5.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(1.9865F, 3.7613F, 0.0F, 0.0F, 3.1416F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

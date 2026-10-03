@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class LegsAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class LegsAnubisArmorModel extends ArmorModel {
     private final ModelPart ribbonLegs;
 
     public LegsAnubisArmorModel(ModelPart root, boolean isSlim) {
@@ -15,8 +15,8 @@ public class LegsAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> 
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new LegsAnubisArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new LegsAnubisArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -50,7 +50,7 @@ public class LegsAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> 
                         .texOffs(108, 18).addBox(-1.25F, -2.25F, -2.5F, 2.0F, 4.0F, 5.0F, new CubeDeformation(0.15F)),
                 PartPose.offsetAndRotation(-1.85F, 1.4F, 0.0F, 0.0F, 0.0F, 0.1745F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

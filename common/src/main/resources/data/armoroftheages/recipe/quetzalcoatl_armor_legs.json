@@ -1,26 +1,18 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"category": "equipment",
-	"pattern": [
-		"BiB",
-		" I ",
-		" w "
-	],
-	"key": {
-		"i": {
-			"item": "minecraft:netherite_leggings"
-		},
-		"I": {
-			"item": "minecraft:gold_ingot"
-		},
-		"B": {
-			"item": "minecraft:bone_block"
-		},
-		"w": {
-			"item": "minecraft:white_wool"
-		}
-	},
-	"result": {
-		"id": "armoroftheages:quetzalcoatl_armor_legs"
-	}
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "BiB",
+    " I ",
+    " w "
+  ],
+  "key": {
+    "i": "minecraft:netherite_leggings",
+    "I": "minecraft:gold_ingot",
+    "B": "minecraft:bone_block",
+    "w": "minecraft:white_wool"
+  },
+  "result": {
+    "id": "armoroftheages:quetzalcoatl_armor_legs"
+  }
 }

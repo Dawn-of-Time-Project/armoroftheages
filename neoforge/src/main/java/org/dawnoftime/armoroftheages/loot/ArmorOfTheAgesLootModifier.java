@@ -6,7 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,11 +54,11 @@ public class ArmorOfTheAgesLootModifier extends LootModifier {
         boolean shouldGenerate = LootTablesToModify.ARMOR_GENERATION_MAP.getOrDefault(armorSetName, false);
 
         if (AOTAConfig.get().generateArmorLoot && shouldGenerate) {
-            List<ResourceLocation> armorPieceLocations = ArmorOfTheAgesForge.ItemRegistryImpl
+            List<Identifier> armorPieceLocations = ArmorOfTheAgesForge.ItemRegistryImpl
                     .ARMORS_LOCATION_FROM_NAME
                     .get(armorSetName);
 
-            Item armorPieceItem = BuiltInRegistries.ITEM.get(armorPieceLocations.get(RANDOM.nextInt(armorPieceLocations.size())));
+            Item armorPieceItem = BuiltInRegistries.ITEM.getValue(armorPieceLocations.get(RANDOM.nextInt(armorPieceLocations.size())));
             ItemStack armorPieceItemStack = new ItemStack(armorPieceItem);
 
             generatedLoot.add(addDamage(armorPieceItemStack, lootContext));

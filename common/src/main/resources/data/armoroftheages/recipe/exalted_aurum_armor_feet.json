@@ -1,22 +1,16 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"category": "equipment",
-	"pattern": [
-		"ioi",
-		"u u"
-	],
-	"key": {
-		"o": {
-			"item": "minecraft:netherite_boots"
-		},
-		"i": {
-			"item": "minecraft:gold_block"
-		},
-		"u": {
-			"item": "minecraft:gold_ingot"
-		}
-	},
-	"result": {
-		"id": "armoroftheages:exalted_aurum_armor_feet"
-	}
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ioi",
+    "u u"
+  ],
+  "key": {
+    "o": "minecraft:netherite_boots",
+    "i": "minecraft:gold_block",
+    "u": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "armoroftheages:exalted_aurum_armor_feet"
+  }
 }

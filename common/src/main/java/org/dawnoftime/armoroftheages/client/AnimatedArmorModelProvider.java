@@ -1,8 +1,8 @@
 package org.dawnoftime.armoroftheages.client;
 
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,44 +21,44 @@ public class AnimatedArmorModelProvider extends ArmorModelProvider {
         return new AnimatedMixedArmorModelProvider(armorName, slot, modelSupplier, layerDefinitionSupplier, slimLayerDefinitionSupplier, numberOfFrames, ticksPerFrame);
     }
 
-    private final ResourceLocation[] resourceLocations;
+    private final Identifier[] resourceLocations;
     private final int ticksPerFrame;
 
     private AnimatedArmorModelProvider(String armorName, EquipmentSlot slot, ArmorModelSupplier modelSupplier, Supplier<LayerDefinition> layerDefinitionSupplier, int numberOfFrames, int ticksPerFrame){
         super(armorName, slot, modelSupplier, layerDefinitionSupplier);
         this.resourceLocations = IntStream.range(0, numberOfFrames)
-                .mapToObj(n -> ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_" + (n + 1) + ".png"))
-                .toArray(ResourceLocation[]::new);
+                .mapToObj(n -> Identifier.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_" + (n + 1) + ".png"))
+                .toArray(Identifier[]::new);
         this.ticksPerFrame = ticksPerFrame;
     }
 
     @NotNull
-    public ResourceLocation getTexture(Entity entity) {
-        return this.resourceLocations[(entity.tickCount / this.ticksPerFrame) % this.resourceLocations.length];
+    public Identifier getTexture(HumanoidRenderState state) {
+        return this.resourceLocations[((int) state.ageInTicks / this.ticksPerFrame) % this.resourceLocations.length];
     }
 
     public static class AnimatedMixedArmorModelProvider extends MixedArmorModelProvider {
-        private final ResourceLocation[] resourceLocations;
-        private final ResourceLocation[] slimResourceLocations;
+        private final Identifier[] resourceLocations;
+        private final Identifier[] slimResourceLocations;
         private final int ticksPerFrame;
 
         private AnimatedMixedArmorModelProvider(String armorName, EquipmentSlot slot, ArmorModelSupplier modelSupplier, Supplier<LayerDefinition> layerDefinitionSupplier, Supplier<LayerDefinition> slimLayerDefinitionSupplier, int numberOfFrames, int ticksPerFrame){
             super(armorName, slot, modelSupplier, layerDefinitionSupplier, slimLayerDefinitionSupplier);
             this.resourceLocations = IntStream.range(0, numberOfFrames)
-                    .mapToObj(n -> ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_" + (n + 1) + ".png"))
-                    .toArray(ResourceLocation[]::new);
+                    .mapToObj(n -> Identifier.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_" + (n + 1) + ".png"))
+                    .toArray(Identifier[]::new);
             this.slimResourceLocations = IntStream.range(0, numberOfFrames)
-                    .mapToObj(n -> ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_slim_" + (n + 1) + ".png"))
-                    .toArray(ResourceLocation[]::new);
+                    .mapToObj(n -> Identifier.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_slim_" + (n + 1) + ".png"))
+                    .toArray(Identifier[]::new);
             this.ticksPerFrame = ticksPerFrame;
         }
 
         @Override
-        public @NotNull ResourceLocation getTexture(Entity entity) {
-            if(isSlim(entity)){
-                return this.slimResourceLocations[(entity.tickCount / this.ticksPerFrame) % this.slimResourceLocations.length];
+        public @NotNull Identifier getTexture(HumanoidRenderState state) {
+            if(isSlim(state)){
+                return this.slimResourceLocations[((int) state.ageInTicks / this.ticksPerFrame) % this.slimResourceLocations.length];
             }else{
-                return this.resourceLocations[(entity.tickCount / this.ticksPerFrame) % this.resourceLocations.length];
+                return this.resourceLocations[((int) state.ageInTicks / this.ticksPerFrame) % this.resourceLocations.length];
             }
         }
     }

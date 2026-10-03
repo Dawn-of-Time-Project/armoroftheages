@@ -2,14 +2,12 @@ package org.dawnoftime.armoroftheages;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
@@ -28,14 +26,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dawnoftime.armoroftheages.client.ArmorOfTheAgesClientForge;
 import org.dawnoftime.armoroftheages.config.AOTAConfig;
-import org.dawnoftime.armoroftheages.item.ForgeHumanoidArmorItem;
+import org.dawnoftime.armoroftheages.item.HumanoidArmorItem;
 import org.dawnoftime.armoroftheages.loot.LootModifierProvider;
 import org.dawnoftime.armoroftheages.loot.LootModifiers;
 import org.dawnoftime.armoroftheages.networking.ForgeConfigSyncNetworkHandler;
 import org.dawnoftime.armoroftheages.networking.NeoForgePayloadRegistry;
 import org.dawnoftime.armoroftheages.patreon.PatronSyncHandler;
-import org.dawnoftime.armoroftheages.registry.ArmorMaterialRegistry;
-import org.dawnoftime.armoroftheages.registry.ArmorMaterialRegistryNeoForge;
 import org.dawnoftime.armoroftheages.registry.ItemRegistry;
 
 import java.io.IOException;
@@ -46,6 +42,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
@@ -83,10 +80,6 @@ public class ArmorOfTheAgesForge {
         CommonClass.CONFIG_SYNC_HANDLER = new ForgeConfigSyncNetworkHandler();
         CommonClass.init();
 
-        // ArmorMaterial registry init
-        ArmorMaterialRegistry.REGISTRY = new ArmorMaterialRegistryNeoForge();
-        ArmorMaterialRegistryNeoForge.getDeferredRegister().register(modEventBus);
-
         // Items init
         ItemRegistryImpl.REGISTRY = new ItemRegistryImpl();
         ItemRegistryImpl.DEFERRED_REGISTER.register(modEventBus);
@@ -106,7 +99,6 @@ public class ArmorOfTheAgesForge {
         LootModifiers.register(modEventBus);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(NeoForgePayloadRegistry::register);
-        modEventBus.addListener(ForgeHumanoidArmorItem::registerClientExtensions);
 
         // Armor set effects — run at the end of each player tick, server-side only
         NeoForge.EVENT_BUS.addListener(ArmorOfTheAgesForge::onPlayerTick);
@@ -115,10 +107,9 @@ public class ArmorOfTheAgesForge {
         NeoForge.EVENT_BUS.addListener(ArmorOfTheAgesForge::onPlayerLoggedIn);
 
         // Client init
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, (modContainer2, parent) -> AOTAConfig.createScreen().generateScreen(parent));
             modEventBus.addListener(ArmorOfTheAgesClientForge::registerLayerDefinitions);
-            modEventBus.addListener(ArmorOfTheAgesClientForge::clientSetup);
             NeoForge.EVENT_BUS.addListener(ArmorOfTheAgesClientForge::playerLoggedInEvent);
         }
     }
@@ -133,8 +124,8 @@ public class ArmorOfTheAgesForge {
         }
     }
 
-    public void gatherData(GatherDataEvent event) {
-        event.getGenerator().addProvider(event.includeServer(), (DataProvider.Factory<LootModifierProvider>) output -> new LootModifierProvider(output, event.getLookupProvider()));
+    public void gatherData(GatherDataEvent.Server event) {
+        event.createProvider(LootModifierProvider::new);
     }
 
     // ===== TEMPORARY CONFIG MIGRATION FIX (see TODO above) =====
@@ -194,24 +185,24 @@ public class ArmorOfTheAgesForge {
     // ===================== END TEMPORARY MIGRATION FIX =====================
 
     public static class ItemRegistryImpl extends ItemRegistry {
-        public static final DeferredRegister<Item> DEFERRED_REGISTER = DeferredRegister.create(BuiltInRegistries.ITEM, MOD_ID);
-        public static final Map<String, List<ResourceLocation>> ARMORS_LOCATION_FROM_NAME = new Object2ObjectOpenHashMap<>();
+        public static final DeferredRegister.Items DEFERRED_REGISTER = DeferredRegister.createItems(MOD_ID);
+        public static final Map<String, List<Identifier>> ARMORS_LOCATION_FROM_NAME = new Object2ObjectOpenHashMap<>();
 
         @Override
-        public void register(String armorSetName, Holder<ArmorMaterial> material, ArmorItem.Type slot, int durabilityFactor) {
+        public void register(String armorSetName, ArmorMaterial material, ArmorType slot) {
             ARMORS_LOCATION_FROM_NAME
                     .computeIfAbsent(armorSetName, s -> new ObjectArrayList<>())
-                    .add(ResourceLocation.fromNamespaceAndPath(MOD_ID, armorSetName + "_" + slot.getSlot().getName()));
-            DEFERRED_REGISTER.register(armorSetName + "_" + slot.getSlot().getName(),
-                    () -> new ForgeHumanoidArmorItem(armorSetName, material, slot, durabilityFactor));
+                    .add(Identifier.fromNamespaceAndPath(MOD_ID, armorSetName + "_" + slot.getSlot().getName()));
+            DEFERRED_REGISTER.registerItem(armorSetName + "_" + slot.getSlot().getName(),
+                    properties -> new HumanoidArmorItem(properties, armorSetName, material, slot));
         }
 
         @Override
-        public Supplier<Item> register(String name, Supplier<Item> itemSupplier) {
+        public Supplier<Item> register(String name, Function<Item.Properties, Item> itemFactory) {
             ARMORS_LOCATION_FROM_NAME
                     .computeIfAbsent(name, s -> new ObjectArrayList<>())
-                    .add(ResourceLocation.fromNamespaceAndPath(MOD_ID, name));
-            return DEFERRED_REGISTER.register(name, itemSupplier);
+                    .add(Identifier.fromNamespaceAndPath(MOD_ID, name));
+            return DEFERRED_REGISTER.registerItem(name, itemFactory);
         }
     }
 }

@@ -6,15 +6,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestCenturionArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestCenturionArmorModel extends ArmorModel {
 
     public ChestCenturionArmorModel(ModelPart root, boolean isSlim) {
         super(root, isSlim);
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestCenturionArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestCenturionArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -50,7 +50,7 @@ public class ChestCenturionArmorModel<T extends LivingEntity> extends ArmorModel
                         .texOffs(74, 11).addBox(-1.0F, -3.5F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.25F)),
                 PartPose.offsetAndRotation(0.25F, -0.25F, 0.0F, 0.0F, 0.0F, 0.3927F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -97,7 +97,7 @@ public class ChestCenturionArmorModel<T extends LivingEntity> extends ArmorModel
                         .texOffs(56, 17).addBox(-1.7274F, -3.4043F, -3.0F, 4.0F, 2.0F, 6.0F, CubeDeformation.NONE)
                         .texOffs(74, 11).addBox(-1.0F, -3.5F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.25F)),
                 PartPose.offsetAndRotation(0.25F, -0.25F, 0.0F, 0.0F, 0.0F, 0.3927F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

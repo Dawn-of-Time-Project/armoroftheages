@@ -6,15 +6,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestJapaneseLightArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestJapaneseLightArmorModel extends ArmorModel {
 
     public ChestJapaneseLightArmorModel(ModelPart root, boolean isSlim) {
         super(root, isSlim);
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestJapaneseLightArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestJapaneseLightArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -29,7 +29,7 @@ public class ChestJapaneseLightArmorModel<T extends LivingEntity> extends ArmorM
                         .texOffs(24, 0).addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, new CubeDeformation(0.3F))
                         .texOffs(12, 16).addBox(1.5F, 3.0F, -2.5F, 2, 5, 5, new CubeDeformation(0.2F)),
                 PartPose.offset(5.0F, 2.0F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 64, 32);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 32);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -45,7 +45,7 @@ public class ChestJapaneseLightArmorModel<T extends LivingEntity> extends ArmorM
                         .texOffs(24, 0).addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, new CubeDeformation(0.3F))
                         .texOffs(12, 16).addBox(0.5F, 3.0F, -2.5F, 2, 5, 5, new CubeDeformation(0.1F)),
                 PartPose.offset(5.0F, 2.5F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 64, 32);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 32);
     }
 
     @Override

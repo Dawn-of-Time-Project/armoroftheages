@@ -7,13 +7,16 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.client.renderer.entity.state.ArmorStandRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import org.dawnoftime.armoroftheages.client.ArmorModelSupplier;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class ArmorModel<T extends LivingEntity> extends HumanoidModel<T> implements ArmorModelSupplier {
+public abstract class ArmorModel extends HumanoidModel<HumanoidRenderState> implements ArmorModelSupplier {
     public final boolean isSlim;
+    /** Pose flags copied from the render state before each animation. */
+    protected boolean riding;
+    protected boolean crouching;
 
     public ArmorModel(ModelPart root, boolean isSlim) {
         super(root);
@@ -33,8 +36,8 @@ public abstract class ArmorModel<T extends LivingEntity> extends HumanoidModel<T
     public static MeshDefinition templateLayerDefinition(float scale) {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
-        root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F + scale, 0.0F));
-        root.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F + scale, 0.0F));
+        root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F + scale, 0.0F))
+                .addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
         root.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F + scale, 0.0F));
         root.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(-5.0F, 2.0F + scale, 0.0F));
         root.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.offset(5.0F, 2.0F + scale, 0.0F));
@@ -43,48 +46,54 @@ public abstract class ArmorModel<T extends LivingEntity> extends HumanoidModel<T
         return mesh;
     }
 
+    /**
+     * The vanilla humanoid pose is computed from the render state first, so the armor follows the body exactly.
+     * Then the custom animation of the armor part is applied on top of it.
+     */
+    /**
+     * Since 1.21 the vanilla humanoid model reads "hat" as a child of "head".
+     * A head model that replaces "head" erases it, so every layer definition goes through this method.
+     */
+    public static MeshDefinition ensureHat(MeshDefinition mesh) {
+        PartDefinition head = mesh.getRoot().getChild("head");
+        if (head != null && head.getChild("hat") == null) {
+            head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+        }
+        return mesh;
+    }
+
     @Override
-    public void setupAnim(@NotNull LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Fix the "breathing" and wrong head rotation on ArmorStands
-        if (entity instanceof ArmorStand entityAS) {
+    public void setupAnim(@NotNull HumanoidRenderState state) {
+        super.setupAnim(state);
+        this.riding = state.isPassenger;
+        this.crouching = state.isCrouching;
+        if (state instanceof ArmorStandRenderState stand) {
+            // Fix the "breathing" and wrong head rotation on ArmorStands
             float f = (float) Math.PI / 180F;
-            this.head.xRot = f * entityAS.getHeadPose().getX();
-            this.head.yRot = f * entityAS.getHeadPose().getY();
-            this.head.zRot = f * entityAS.getHeadPose().getZ();
-            this.body.xRot = f * entityAS.getBodyPose().getX();
-            this.body.yRot = f * entityAS.getBodyPose().getY();
-            this.body.zRot = f * entityAS.getBodyPose().getZ();
-            this.leftArm.xRot = f * entityAS.getLeftArmPose().getX();
-            this.leftArm.yRot = f * entityAS.getLeftArmPose().getY();
-            this.leftArm.zRot = f * entityAS.getLeftArmPose().getZ();
-            this.rightArm.xRot = f * entityAS.getRightArmPose().getX();
-            this.rightArm.yRot = f * entityAS.getRightArmPose().getY();
-            this.rightArm.zRot = f * entityAS.getRightArmPose().getZ();
-            this.leftLeg.xRot = f * entityAS.getLeftLegPose().getX();
-            this.leftLeg.yRot = f * entityAS.getLeftLegPose().getY();
-            this.leftLeg.zRot = f * entityAS.getLeftLegPose().getZ();
-            this.rightLeg.xRot = f * entityAS.getRightLegPose().getX();
-            this.rightLeg.yRot = f * entityAS.getRightLegPose().getY();
-            this.rightLeg.zRot = f * entityAS.getRightLegPose().getZ();
+            this.head.xRot = f * stand.headPose.x();
+            this.head.yRot = f * stand.headPose.y();
+            this.head.zRot = f * stand.headPose.z();
+            this.body.xRot = f * stand.bodyPose.x();
+            this.body.yRot = f * stand.bodyPose.y();
+            this.body.zRot = f * stand.bodyPose.z();
+            this.leftArm.xRot = f * stand.leftArmPose.x();
+            this.leftArm.yRot = f * stand.leftArmPose.y();
+            this.leftArm.zRot = f * stand.leftArmPose.z();
+            this.rightArm.xRot = f * stand.rightArmPose.x();
+            this.rightArm.yRot = f * stand.rightArmPose.y();
+            this.rightArm.zRot = f * stand.rightArmPose.z();
+            this.leftLeg.xRot = f * stand.leftLegPose.x();
+            this.leftLeg.yRot = f * stand.leftLegPose.y();
+            this.leftLeg.zRot = f * stand.leftLegPose.z();
+            this.rightLeg.xRot = f * stand.rightLegPose.x();
+            this.rightLeg.yRot = f * stand.rightLegPose.y();
+            this.rightLeg.zRot = f * stand.rightLegPose.z();
         } else {
-            this.setupArmorPartAnim(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.setupArmorPartAnim(state.walkAnimationPos, state.walkAnimationSpeed, state.ageInTicks, state.yRot, state.xRot);
         }
     }
 
     public static float sinPI(float f) { return Mth.sin(f * (float) Math.PI); }
 
     public static float cosPI(float f) { return Mth.cos(f * (float) Math.PI); }
-
-    public <M extends HumanoidModel<? extends LivingEntity>> void copyEntityModelPosition(M parentModel) {
-        this.leftArmPose = parentModel.leftArmPose;
-        this.rightArmPose = parentModel.rightArmPose;
-        this.crouching = parentModel.crouching;
-        this.head.copyFrom(parentModel.head);
-        this.hat.copyFrom(parentModel.hat);
-        this.body.copyFrom(parentModel.body);
-        this.rightArm.copyFrom(parentModel.rightArm);
-        this.leftArm.copyFrom(parentModel.leftArm);
-        this.rightLeg.copyFrom(parentModel.rightLeg);
-        this.leftLeg.copyFrom(parentModel.leftLeg);
-    }
 }

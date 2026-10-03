@@ -7,28 +7,26 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import org.dawnoftime.armoroftheages.item.HumanoidArmorItem;
 import org.dawnoftime.armoroftheages.loot.AmorOfTheAgesLootModifiersFabric;
 import org.dawnoftime.armoroftheages.networking.FabricConfigSyncNetworkHandler;
 import org.dawnoftime.armoroftheages.patreon.PatronSyncHandler;
-import org.dawnoftime.armoroftheages.registry.ArmorMaterialRegistry;
-import org.dawnoftime.armoroftheages.registry.ArmorMaterialRegistryFabric;
 import org.dawnoftime.armoroftheages.registry.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
@@ -47,14 +45,11 @@ public class ArmorOfTheAgesFabric implements ModInitializer {
         CommonClass.CONFIG_SYNC_HANDLER = new FabricConfigSyncNetworkHandler();
         CommonClass.init();
 
-        // ArmorMaterial registry init
-        ArmorMaterialRegistry.REGISTRY = new ArmorMaterialRegistryFabric();
-
         // Items init
         ItemRegistryImpl.REGISTRY = new ItemRegistryImpl();
 
         // Creative inventory init
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation.fromNamespaceAndPath(MOD_ID, MOD_ID), CREATIVE_MODE_TAB);
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(MOD_ID, MOD_ID), CREATIVE_MODE_TAB);
         AmorOfTheAgesLootModifiersFabric.modifyLootTables();
 
         // Armor set effects — iterate all online players at the end of each server tick
@@ -68,21 +63,21 @@ public class ArmorOfTheAgesFabric implements ModInitializer {
 
     public static class ItemRegistryImpl extends ItemRegistry {
         public static final List<Item> ITEMS = new ArrayList<>();
-        public static final Map<String, List<ResourceLocation>> ARMORS_LOCATION_FROM_NAME = new Object2ObjectOpenHashMap<>();
+        public static final Map<String, List<Identifier>> ARMORS_LOCATION_FROM_NAME = new Object2ObjectOpenHashMap<>();
 
         @Override
-        public void register(String armorSetName, Holder<ArmorMaterial> material, ArmorItem.Type slot, int durabilityFactor) {
-            Item item = new HumanoidArmorItem(armorSetName, material, slot, durabilityFactor);
-            ResourceLocation armorLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, armorSetName + "_" + slot.getSlot().getName());
+        public void register(String armorSetName, ArmorMaterial material, ArmorType slot) {
+            Identifier armorLocation = Identifier.fromNamespaceAndPath(MOD_ID, armorSetName + "_" + slot.getSlot().getName());
+            Item item = new HumanoidArmorItem(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, armorLocation)), armorSetName, material, slot);
             Registry.register(BuiltInRegistries.ITEM, armorLocation, item);
             ARMORS_LOCATION_FROM_NAME.computeIfAbsent(armorSetName, s -> new ObjectArrayList<>()).add(armorLocation);
             ITEMS.add(item);
         }
 
         @Override
-        public Supplier<Item> register(String name, Supplier<Item> itemSupplier) {
-            Item item = itemSupplier.get();
-            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+        public Supplier<Item> register(String name, Function<Item.Properties, Item> itemFactory) {
+            Identifier location = Identifier.fromNamespaceAndPath(MOD_ID, name);
+            Item item = itemFactory.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, location)));
             Registry.register(BuiltInRegistries.ITEM, location, item);
             ARMORS_LOCATION_FROM_NAME.computeIfAbsent(name, s -> new ObjectArrayList<>()).add(location);
             ITEMS.add(item);

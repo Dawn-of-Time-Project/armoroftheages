@@ -3,7 +3,7 @@ package org.dawnoftime.armoroftheages.networking.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.dawnoftime.armoroftheages.config.CenturionSkin;
 import org.dawnoftime.armoroftheages.config.IronPlateSkin;
 import org.dawnoftime.armoroftheages.config.OYoroiSkin;
@@ -14,7 +14,7 @@ import org.dawnoftime.armoroftheages.config.SkinSyncState;
 import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
 
 public record SkinSyncPayload(SkinSyncState state) implements CustomPacketPayload {
-    public static final Type<SkinSyncPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "skin_sync"));
+    public static final Type<SkinSyncPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MOD_ID, "skin_sync"));
 
     public static final StreamCodec<FriendlyByteBuf, SkinSyncPayload> STREAM_CODEC = StreamCodec.of(
         SkinSyncPayload::encode,

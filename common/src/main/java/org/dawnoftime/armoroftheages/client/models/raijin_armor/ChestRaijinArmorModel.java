@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestRaijinArmorModel extends ArmorModel {
     private final ModelPart chestScarfTop;
     private final ModelPart chestScarfRightA;
     private final ModelPart chestScarfRightB;
@@ -35,8 +35,8 @@ public class ChestRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T>
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestRaijinArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestRaijinArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -107,7 +107,7 @@ public class ChestRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T>
                         .texOffs(54, 5).addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -0.872665F, 0.872665F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -186,7 +186,7 @@ public class ChestRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T>
                         .texOffs(54, 5).addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -0.872665F, 0.872665F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     @Override

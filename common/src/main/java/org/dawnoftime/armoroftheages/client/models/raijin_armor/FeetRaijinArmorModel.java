@@ -6,15 +6,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class FeetRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class FeetRaijinArmorModel extends ArmorModel {
 
     public FeetRaijinArmorModel(ModelPart root, boolean isSlim) {
         super(root, isSlim);
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new FeetRaijinArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new FeetRaijinArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -35,7 +35,7 @@ public class FeetRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> 
         right_leg.addOrReplaceChild("legRingRightB", CubeListBuilder.create()
                         .texOffs(30, 0).addBox(-2.5F, 7.0F, -2.5F, 5.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)),
                 PartPose.ZERO);
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     @Override

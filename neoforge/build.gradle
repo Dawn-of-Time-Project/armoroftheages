@@ -11,11 +11,6 @@ neoForge {
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
-    // Epic Fight compat needs raw access to the model cubes, this file is NeoForge only
-    def loaderAt = file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (loaderAt.exists()) {
-        accessTransformers.from(loaderAt.absolutePath)
-    }
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
@@ -44,8 +39,12 @@ neoForge {
         client {
             client()
         }
-        data {
-            data()
+        clientData {
+            clientData()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath
+        }
+        serverData {
+            serverData()
             programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath
         }
         server {
@@ -62,16 +61,9 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    // Both numbers comes from Curse. The first number is the project_id (on the right) and the second one is the file_id (in the URL)
-    runtimeOnly "curse.maven:jei-238222:5466551" // JEI (Just Enough Items)
-    //runtimeOnly "curse.maven:citadel-331936:5143956" // Citadel
-    //runtimeOnly "curse.maven:rats-323596:4802123" // Rats
-
-    implementation "curse.maven:jei-238222:7014282"
-    implementation "thedarkcolour:kotlinforforge-neoforge:5.6.0"
-    // Epic Fight 21.17.3.1 (Modrinth version id). Compile only: the compat code is loaded only when the mod is present.
-    compileOnly "maven.modrinth:epic-fight:8HHhJt6i"
-    runtimeOnly "maven.modrinth:epic-fight:8HHhJt6i" // lets runClient load Epic Fight for testing
+    implementation "maven.modrinth:jei:qW3incVy" // JEI 27.44.0.104
+    implementation "thedarkcolour:kotlinforforge-neoforge:6.3.0"
+    // Epic Fight has no 1.21.11 release yet, dependency removed
     implementation ("dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge")
 }
 

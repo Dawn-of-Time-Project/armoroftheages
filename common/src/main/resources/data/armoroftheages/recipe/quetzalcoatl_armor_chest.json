@@ -1,29 +1,19 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"category": "equipment",
-	"pattern": [
-		"oBo",
-		"xix",
-		"oOo"
-	],
-	"key": {
-		"i": {
-			"item": "minecraft:netherite_chestplate"
-		},
-		"x": {
-			"item": "minecraft:gold_ingot"
-		},
-		"o": {
-			"item": "minecraft:feather"
-		},
-		"O": {
-			"item": "minecraft:egg"
-		},
-		"B": {
-			"item": "minecraft:bone_block"
-		}
-	},
-	"result": {
-		"id": "armoroftheages:quetzalcoatl_armor_chest"
-	}
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "oBo",
+    "xix",
+    "oOo"
+  ],
+  "key": {
+    "i": "minecraft:netherite_chestplate",
+    "x": "minecraft:gold_ingot",
+    "o": "minecraft:feather",
+    "O": "minecraft:egg",
+    "B": "minecraft:bone_block"
+  },
+  "result": {
+    "id": "armoroftheages:quetzalcoatl_armor_chest"
+  }
 }

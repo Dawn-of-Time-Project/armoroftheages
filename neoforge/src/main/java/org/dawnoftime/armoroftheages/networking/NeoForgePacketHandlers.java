@@ -19,7 +19,7 @@ public class NeoForgePacketHandlers {
         context.enqueueWork(() -> {
             if (CommonClass.CONFIG_SYNC_HANDLER instanceof ForgeConfigSyncNetworkHandler handler) {
                 handler.CURRENT_SERVER_STATE.put(context.player().getUUID(), payload.preferredModel());
-                handler.globalSync(context.player().getServer());
+                handler.globalSync(context.player().level().getServer());
             }
         });
     }
@@ -28,7 +28,7 @@ public class NeoForgePacketHandlers {
         context.enqueueWork(() -> {
             if (CommonClass.CONFIG_SYNC_HANDLER instanceof ForgeConfigSyncNetworkHandler handler) {
                 handler.CURRENT_SERVER_STATE.remove(context.player().getUUID());
-                handler.globalSync(context.player().getServer());
+                handler.globalSync(context.player().level().getServer());
             }
         });
     }
@@ -45,7 +45,7 @@ public class NeoForgePacketHandlers {
         context.enqueueWork(() -> {
             if (CommonClass.CONFIG_SYNC_HANDLER instanceof ForgeConfigSyncNetworkHandler handler) {
                 handler.CURRENT_SKIN_STATE.put(context.player().getUUID(), payload.state());
-                handler.globalSkinSync(context.player().getServer());
+                handler.globalSkinSync(context.player().level().getServer());
             }
         });
     }
@@ -54,7 +54,7 @@ public class NeoForgePacketHandlers {
         context.enqueueWork(() -> {
             if (CommonClass.CONFIG_SYNC_HANDLER instanceof ForgeConfigSyncNetworkHandler handler) {
                 handler.CURRENT_SKIN_STATE.remove(context.player().getUUID());
-                handler.globalSkinSync(context.player().getServer());
+                handler.globalSkinSync(context.player().level().getServer());
             }
         });
     }

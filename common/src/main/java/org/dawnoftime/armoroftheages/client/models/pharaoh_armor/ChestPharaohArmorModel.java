@@ -6,15 +6,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestPharaohArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestPharaohArmorModel extends ArmorModel {
 
     public ChestPharaohArmorModel(ModelPart root, boolean isSlim) {
         super(root, isSlim);
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestPharaohArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestPharaohArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -40,7 +40,7 @@ public class ChestPharaohArmorModel<T extends LivingEntity> extends ArmorModel<T
                         .addBox(-3.5F, -2.5F, -2.5F, 5, 10, 5, new CubeDeformation(-0.2F)),
                 PartPose.offset(-5.5F, 2.0F, -0.5F));
 
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -76,7 +76,7 @@ public class ChestPharaohArmorModel<T extends LivingEntity> extends ArmorModel<T
                         .texOffs(38, 54)
                         .addBox(-5.5F, 0.0F, 0.0F, 11, 5, 0, new CubeDeformation(0.2F)),
                 PartPose.offsetAndRotation(0.0F, -0.25F, -2.5F, -0.3403392F, 0.0F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class LegsQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class LegsQuetzalcoatlArmorModel extends ArmorModel {
     private final ModelPart underwearFront;
     private final ModelPart underwearBack;
 
@@ -17,8 +17,8 @@ public class LegsQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorMod
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new LegsQuetzalcoatlArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new LegsQuetzalcoatlArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -68,7 +68,7 @@ public class LegsQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorMod
                         .addBox(-2.5F, 0.1F, 0.1F, 5.0F, 5.0F, 0.0F, CubeDeformation.NONE),
                 PartPose.offset(0.0F, 11.3F, 2.3F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

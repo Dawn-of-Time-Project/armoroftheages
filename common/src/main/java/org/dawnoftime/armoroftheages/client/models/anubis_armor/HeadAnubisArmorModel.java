@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class HeadAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class HeadAnubisArmorModel extends ArmorModel {
     private final ModelPart ribbonLeft;
     private final ModelPart ribbonRight;
     private final ModelPart earLeft;
@@ -21,8 +21,8 @@ public class HeadAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> 
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new HeadAnubisArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new HeadAnubisArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -72,7 +72,7 @@ public class HeadAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> 
                         .texOffs(0, 16).addBox(-1.7658F, -10.5323F, -0.5764F, 5.0F, 10.0F, 0.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(4.0F, -7.0F, -0.5F, 0.1249F, -0.2577F, 0.0465F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -122,7 +122,7 @@ public class HeadAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> 
                         .texOffs(0, 16).addBox(-1.7658F, -10.5323F, -0.5764F, 5.0F, 10.0F, 0.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(4.0F, -7.0F, -0.5F, 0.1681F, -0.2322F, -0.1315F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

@@ -84,22 +84,22 @@ public class FabricConfigSyncNetworkHandler implements ConfigSyncNetworkHandler 
 
         ServerPlayNetworking.registerGlobalReceiver(PreferenceSyncPayload.TYPE, (payload, context) -> {
             CURRENT_SERVER_STATE.put(context.player().getUUID(), payload.preferredModel());
-            globalSync(context.player().getServer());
+            globalSync(context.player().level().getServer());
         });
 
         ServerPlayNetworking.registerGlobalReceiver(DisablePreferencesPayload.TYPE, (payload, context) -> {
             CURRENT_SERVER_STATE.remove(context.player().getUUID());
-            globalSync(context.player().getServer());
+            globalSync(context.player().level().getServer());
         });
 
         ServerPlayNetworking.registerGlobalReceiver(SkinSyncPayload.TYPE, (payload, context) -> {
             CURRENT_SKIN_STATE.put(context.player().getUUID(), payload.state());
-            globalSkinSync(context.player().getServer());
+            globalSkinSync(context.player().level().getServer());
         });
 
         ServerPlayNetworking.registerGlobalReceiver(DisableSkinSyncPayload.TYPE, (payload, context) -> {
             CURRENT_SKIN_STATE.remove(context.player().getUUID());
-            globalSkinSync(context.player().getServer());
+            globalSkinSync(context.player().level().getServer());
         });
     }
 

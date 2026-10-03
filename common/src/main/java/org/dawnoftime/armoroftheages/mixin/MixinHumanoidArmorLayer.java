@@ -1,16 +1,15 @@
 package org.dawnoftime.armoroftheages.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.dawnoftime.armoroftheages.client.ArmorModelProvider;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
@@ -22,57 +21,37 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidArmorLayer.class)
-public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
+public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>> extends RenderLayer<S, M> {
 
-    public MixinHumanoidArmorLayer(RenderLayerParent<T, M> parentLayer) {
+    public MixinHumanoidArmorLayer(RenderLayerParent<S, M> parentLayer) {
         super(parentLayer);
     }
 
     /**
-     * I created a custom render function because MC doesn't pass many useful parameters to animate the armor, such as partial ticks or limbSwing.
+     * The AotA armors have no equipment asset, so vanilla renders nothing for them.
+     * Their model is submitted here, the animation is computed from the render state when the model is rendered.
      */
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V", at = @At("HEAD"))
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci){
-        this.armorOfTheAges$renderCustomArmor(poseStack, buffer, livingEntity, EquipmentSlot.HEAD, packedLight, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        this.armorOfTheAges$renderCustomArmor(poseStack, buffer, livingEntity, EquipmentSlot.CHEST, packedLight, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        this.armorOfTheAges$renderCustomArmor(poseStack, buffer, livingEntity, EquipmentSlot.LEGS, packedLight, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        this.armorOfTheAges$renderCustomArmor(poseStack, buffer, livingEntity, EquipmentSlot.FEET, packedLight, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    @Inject(method = "submit", at = @At("HEAD"))
+    private void armorOfTheAges$submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, S state, float yRot, float xRot, CallbackInfo ci) {
+        this.armorOfTheAges$submitCustomArmor(poseStack, collector, packedLight, state, state.headEquipment, EquipmentSlot.HEAD);
+        this.armorOfTheAges$submitCustomArmor(poseStack, collector, packedLight, state, state.chestEquipment, EquipmentSlot.CHEST);
+        this.armorOfTheAges$submitCustomArmor(poseStack, collector, packedLight, state, state.legsEquipment, EquipmentSlot.LEGS);
+        this.armorOfTheAges$submitCustomArmor(poseStack, collector, packedLight, state, state.feetEquipment, EquipmentSlot.FEET);
     }
 
     @Unique
-    private void armorOfTheAges$renderCustomArmor(PoseStack stack, MultiBufferSource buffer, T entity, EquipmentSlot slot, int packedLight, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-        ItemStack itemStack = entity.getItemBySlot(slot);
-        if (itemStack.getItem() instanceof HumanoidArmorItem armorItem) {
-            if (armorItem.getEquipmentSlot() == slot) {
-                ArmorModelProvider provider = armorItem.getModelProvider();
-                if(provider != null){
-                    // First we get the model from the armorItem.
-                    ArmorModel<?> model = provider.getArmorModel(entity);
-                    // Now we will animate the model !
-                    model.copyEntityModelPosition(this.getParentModel());
-                    model.young = entity.isBaby();
-                    model.crouching = entity.isShiftKeyDown();
-                    model.riding = this.getParentModel().riding;
-                    model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.armorCutoutNoCull(provider.getTexture(entity)));
-                    model.renderToBuffer(stack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, -1);
-
-                    if (itemStack.hasFoil()) {
-                        model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), packedLight, OverlayTexture.NO_OVERLAY, -1);
-                    }
+    private void armorOfTheAges$submitCustomArmor(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, S state, ItemStack itemStack, EquipmentSlot slot) {
+        if (itemStack.getItem() instanceof HumanoidArmorItem armorItem && armorItem.getArmorSlot() == slot) {
+            ArmorModelProvider provider = armorItem.getModelProvider();
+            if (provider != null) {
+                ArmorModel model = provider.getArmorModel(state);
+                collector.submitModel(model, state, poseStack, RenderTypes.armorCutoutNoCull(provider.getTexture(state)),
+                        packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+                if (itemStack.hasFoil()) {
+                    collector.submitModel(model, state, poseStack, RenderTypes.armorEntityGlint(),
+                            packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
                 }
             }
-        }
-    }
-
-    /**
-     * Since I already renderer my armor in my custom renderer, I will cancel the rendering if the item is a AotA armor item.
-     */
-    @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-    private void onRenderArmorPiece(PoseStack stack, MultiBufferSource buffer, T entity, EquipmentSlot slot, int packedLight, A defaultModel, CallbackInfo ci) {
-        ItemStack itemStack = entity.getItemBySlot(slot);
-        if (itemStack.getItem() instanceof HumanoidArmorItem) {
-            ci.cancel();
         }
     }
 }

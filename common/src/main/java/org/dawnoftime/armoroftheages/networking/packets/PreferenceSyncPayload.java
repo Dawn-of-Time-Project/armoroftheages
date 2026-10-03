@@ -3,13 +3,13 @@ package org.dawnoftime.armoroftheages.networking.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.dawnoftime.armoroftheages.config.PreferredModel;
 
 import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
 
 public record PreferenceSyncPayload(PreferredModel preferredModel) implements CustomPacketPayload {
-    public static final Type<PreferenceSyncPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "preference_sync"));
+    public static final Type<PreferenceSyncPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MOD_ID, "preference_sync"));
     
     public static final StreamCodec<FriendlyByteBuf, PreferenceSyncPayload> STREAM_CODEC = StreamCodec.composite(
         StreamCodec.of(

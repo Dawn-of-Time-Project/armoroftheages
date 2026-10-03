@@ -3,7 +3,7 @@ package org.dawnoftime.armoroftheages.networking.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.dawnoftime.armoroftheages.config.PreferredModel;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.UUID;
 import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
 
 public record GlobalPreferenceSyncPayload(Map<UUID, PreferredModel> preferences) implements CustomPacketPayload {
-    public static final Type<GlobalPreferenceSyncPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "global_preference_sync"));
+    public static final Type<GlobalPreferenceSyncPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MOD_ID, "global_preference_sync"));
     
     public static final StreamCodec<FriendlyByteBuf, GlobalPreferenceSyncPayload> STREAM_CODEC = StreamCodec.of(
         GlobalPreferenceSyncPayload::encode,

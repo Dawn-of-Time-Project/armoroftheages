@@ -3,7 +3,7 @@ package org.dawnoftime.armoroftheages;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
@@ -70,20 +70,20 @@ public class ArmorSetEffectHandler {
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.4f);
             }
-            if (player.level().isNight()) {
-                refreshConditional(player, MobEffects.MOVEMENT_SPEED, 0);
+            if (player.level().isDarkOutside()) {
+                refreshConditional(player, MobEffects.SPEED, 0);
             } else {
-                player.removeEffect(MobEffects.MOVEMENT_SPEED);
+                player.removeEffect(MobEffects.SPEED);
             }
             if (player.isShiftKeyDown()) {
-                refreshConditional(player, MobEffects.DAMAGE_BOOST, 0);
+                refreshConditional(player, MobEffects.STRENGTH, 0);
             } else {
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         } else {
             if (DOMARU_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.MOVEMENT_SPEED);
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.SPEED);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         }
     }
@@ -106,18 +106,18 @@ public class ArmorSetEffectHandler {
 
             boolean inDesert = player.level().getBiome(player.blockPosition())
                     .unwrapKey()
-                    .map(key -> key.location().equals(ResourceLocation.fromNamespaceAndPath("minecraft", "desert")))
+                    .map(key -> key.identifier().equals(Identifier.fromNamespaceAndPath("minecraft", "desert")))
                     .orElse(false);
             if (inDesert) {
-                refreshConditional(player, MobEffects.DIG_SPEED, 0);
+                refreshConditional(player, MobEffects.HASTE, 0);
             } else {
-                player.removeEffect(MobEffects.DIG_SPEED);
+                player.removeEffect(MobEffects.HASTE);
             }
         } else {
             if (PHARAOH_ACTIVE.remove(uuid)) {
                 player.removeEffect(MobEffects.FIRE_RESISTANCE);
                 player.removeEffect(MobEffects.GLOWING);
-                player.removeEffect(MobEffects.DIG_SPEED);
+                player.removeEffect(MobEffects.HASTE);
             }
         }
     }
@@ -141,12 +141,12 @@ public class ArmorSetEffectHandler {
 
             float healthRatio = player.getHealth() / player.getMaxHealth();
             int strengthAmplifier = healthRatio < 0.20f ? 2 : healthRatio < 0.50f ? 1 : 0;
-            refreshLong(player, MobEffects.DAMAGE_BOOST, strengthAmplifier);
+            refreshLong(player, MobEffects.STRENGTH, strengthAmplifier);
         } else {
             if (QUETZALCOATL_ACTIVE.remove(uuid)) {
                 player.removeEffect(MobEffects.HUNGER);
                 player.removeEffect(MobEffects.POISON);
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         }
     }
@@ -167,7 +167,7 @@ public class ArmorSetEffectHandler {
             AABB searchBox = player.getBoundingBox().inflate(16.0);
             boolean monsterNearby = !player.level().getEntitiesOfClass(Monster.class, searchBox).isEmpty();
 
-            refreshLong(player, MobEffects.DAMAGE_RESISTANCE, monsterNearby ? 1 : 0);
+            refreshLong(player, MobEffects.RESISTANCE, monsterNearby ? 1 : 0);
             if (monsterNearby) {
                 refreshConditional(player, MobEffects.REGENERATION, 0);
             } else {
@@ -175,7 +175,7 @@ public class ArmorSetEffectHandler {
             }
         } else {
             if (HOLY_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+                player.removeEffect(MobEffects.RESISTANCE);
                 player.removeEffect(MobEffects.REGENERATION);
             }
         }
@@ -201,27 +201,27 @@ public class ArmorSetEffectHandler {
             boolean raining    = player.level().isRaining();
 
             if (thundering) {
-                refreshConditional(player, MobEffects.MOVEMENT_SPEED, 1);
-                refreshConditional(player, MobEffects.DAMAGE_BOOST,   1);
-                player.removeEffect(MobEffects.JUMP);
+                refreshConditional(player, MobEffects.SPEED, 1);
+                refreshConditional(player, MobEffects.STRENGTH,   1);
+                player.removeEffect(MobEffects.JUMP_BOOST);
                 player.removeEffect(MobEffects.SLOW_FALLING);
             } else if (raining) {
-                refreshConditional(player, MobEffects.MOVEMENT_SPEED, 1);
-                refreshConditional(player, MobEffects.DAMAGE_BOOST,   0);
-                player.removeEffect(MobEffects.JUMP);
+                refreshConditional(player, MobEffects.SPEED, 1);
+                refreshConditional(player, MobEffects.STRENGTH,   0);
+                player.removeEffect(MobEffects.JUMP_BOOST);
                 player.removeEffect(MobEffects.SLOW_FALLING);
             } else {
                 // Clear: downgrade from II to I immediately if coming from rain/thunder
-                forceEffect(player, MobEffects.MOVEMENT_SPEED, 0, EFFECT_DURATION_CONDITIONAL);
-                refreshConditional(player, MobEffects.JUMP,         1);
+                forceEffect(player, MobEffects.SPEED, 0, EFFECT_DURATION_CONDITIONAL);
+                refreshConditional(player, MobEffects.JUMP_BOOST,         1);
                 refreshConditional(player, MobEffects.SLOW_FALLING, 0);
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         } else {
             if (RAIJIN_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.MOVEMENT_SPEED);
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
-                player.removeEffect(MobEffects.JUMP);
+                player.removeEffect(MobEffects.SPEED);
+                player.removeEffect(MobEffects.STRENGTH);
+                player.removeEffect(MobEffects.JUMP_BOOST);
                 player.removeEffect(MobEffects.SLOW_FALLING);
             }
         }
@@ -240,10 +240,10 @@ public class ArmorSetEffectHandler {
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.1f);
             }
-            refreshLong(player, MobEffects.DAMAGE_RESISTANCE, 0);
+            refreshLong(player, MobEffects.RESISTANCE, 0);
         } else {
             if (IRON_PLATE_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+                player.removeEffect(MobEffects.RESISTANCE);
             }
         }
     }
@@ -261,10 +261,10 @@ public class ArmorSetEffectHandler {
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
             }
-            refreshLong(player, MobEffects.DAMAGE_BOOST, 0);
+            refreshLong(player, MobEffects.STRENGTH, 0);
         } else {
             if (O_YOROI_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         }
     }
@@ -310,19 +310,19 @@ public class ArmorSetEffectHandler {
 
             float healthRatio = player.getHealth() / player.getMaxHealth();
             int resistanceAmplifier = (healthRatio < 0.50f) ? 1 : 0;
-            refreshLong(player, MobEffects.DAMAGE_RESISTANCE, resistanceAmplifier);
+            refreshLong(player, MobEffects.RESISTANCE, resistanceAmplifier);
 
             if (healthRatio < 0.20f) {
-                refreshConditional(player, MobEffects.DAMAGE_BOOST, 0);
+                refreshConditional(player, MobEffects.STRENGTH, 0);
             } else {
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         } else {
             if (ANUBIS_ACTIVE.remove(uuid)) {
                 player.removeEffect(MobEffects.HEALTH_BOOST);
                 player.removeEffect(MobEffects.WITHER);
-                player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
-                player.removeEffect(MobEffects.DAMAGE_BOOST);
+                player.removeEffect(MobEffects.RESISTANCE);
+                player.removeEffect(MobEffects.STRENGTH);
             }
         }
     }
@@ -349,39 +349,39 @@ public class ArmorSetEffectHandler {
 
             if (dimension.equals(Level.NETHER)) {
                 refreshConditional(player, MobEffects.FIRE_RESISTANCE,   1);
-                refreshConditional(player, MobEffects.DAMAGE_RESISTANCE, 0);
+                refreshConditional(player, MobEffects.RESISTANCE, 0);
                 player.removeEffect(MobEffects.WEAKNESS);
-                player.removeEffect(MobEffects.DIG_SLOWDOWN);
+                player.removeEffect(MobEffects.MINING_FATIGUE);
             } else if (dimension.equals(Level.END)) {
                 refreshConditional(player, MobEffects.FIRE_RESISTANCE,   1);
-                refreshConditional(player, MobEffects.DAMAGE_RESISTANCE, 1);
+                refreshConditional(player, MobEffects.RESISTANCE, 1);
                 player.removeEffect(MobEffects.WEAKNESS);
-                player.removeEffect(MobEffects.DIG_SLOWDOWN);
+                player.removeEffect(MobEffects.MINING_FATIGUE);
             } else {
                 int y = player.blockPosition().getY();
                 if (y < 0) {
                     refreshConditional(player, MobEffects.FIRE_RESISTANCE,   0);
-                    refreshConditional(player, MobEffects.DAMAGE_RESISTANCE, 0);
+                    refreshConditional(player, MobEffects.RESISTANCE, 0);
                     player.removeEffect(MobEffects.WEAKNESS);
-                    player.removeEffect(MobEffects.DIG_SLOWDOWN);
+                    player.removeEffect(MobEffects.MINING_FATIGUE);
                 } else if (y < 64) {
                     refreshConditional(player, MobEffects.WEAKNESS,          0);
-                    refreshConditional(player, MobEffects.DAMAGE_RESISTANCE, 0);
+                    refreshConditional(player, MobEffects.RESISTANCE, 0);
                     player.removeEffect(MobEffects.FIRE_RESISTANCE);
-                    player.removeEffect(MobEffects.DIG_SLOWDOWN);
+                    player.removeEffect(MobEffects.MINING_FATIGUE);
                 } else {
-                    refreshConditional(player, MobEffects.DIG_SLOWDOWN, 0);
+                    refreshConditional(player, MobEffects.MINING_FATIGUE, 0);
                     refreshConditional(player, MobEffects.WEAKNESS,     0);
                     player.removeEffect(MobEffects.FIRE_RESISTANCE);
-                    player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+                    player.removeEffect(MobEffects.RESISTANCE);
                 }
             }
         } else {
             if (EXALTED_AURUM_ACTIVE.remove(uuid)) {
                 player.removeEffect(MobEffects.FIRE_RESISTANCE);
-                player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+                player.removeEffect(MobEffects.RESISTANCE);
                 player.removeEffect(MobEffects.WEAKNESS);
-                player.removeEffect(MobEffects.DIG_SLOWDOWN);
+                player.removeEffect(MobEffects.MINING_FATIGUE);
             }
         }
     }
@@ -399,10 +399,10 @@ public class ArmorSetEffectHandler {
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.8f, 1.5f);
             }
-            refreshLong(player, MobEffects.DIG_SPEED, 0);
+            refreshLong(player, MobEffects.HASTE, 0);
         } else {
             if (BAMBOO_ACTIVE.remove(uuid)) {
-                player.removeEffect(MobEffects.DIG_SPEED);
+                player.removeEffect(MobEffects.HASTE);
             }
         }
     }
@@ -417,7 +417,7 @@ public class ArmorSetEffectHandler {
 
     private static boolean isSpecificItem(ItemStack stack, String itemPath) {
         if (stack.isEmpty()) return false;
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Identifier key = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return Constants.MOD_ID.equals(key.getNamespace()) && itemPath.equals(key.getPath());
     }
 
@@ -494,7 +494,7 @@ public class ArmorSetEffectHandler {
 
     private static boolean isArmorPiece(ItemStack stack, String setName, EquipmentSlot slot) {
         if (stack.isEmpty()) return false;
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Identifier key = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return Constants.MOD_ID.equals(key.getNamespace())
             && (setName + "_" + slot.getName()).equals(key.getPath());
     }

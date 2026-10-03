@@ -2,12 +2,9 @@ package org.dawnoftime.armoroftheages.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.Minecraft;
-import org.dawnoftime.armoroftheages.ArmorOfTheAgesFabric;
 import org.dawnoftime.armoroftheages.CommonClass;
-import org.dawnoftime.armoroftheages.item.HumanoidArmorItem;
 import org.dawnoftime.armoroftheages.registry.ModelProviderRegistry;
 
 public class ArmorOfTheAgesClientFabric implements ClientModInitializer {
@@ -18,9 +15,6 @@ public class ArmorOfTheAgesClientFabric implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             CommonClass.CONFIG_SYNC_HANDLER.syncConfig();
         });
-        ArmorOfTheAgesFabric.ItemRegistryImpl.ITEMS.stream()
-                .filter(item -> item instanceof HumanoidArmorItem)
-                .forEach(item -> ArmorRenderer.register(new CustomArmorRenderer(), item));
     }
 
     /**

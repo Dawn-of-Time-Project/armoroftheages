@@ -6,15 +6,15 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class HeadExaltedAurumArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class HeadExaltedAurumArmorModel extends ArmorModel {
 
     public HeadExaltedAurumArmorModel(ModelPart root, boolean isSlim) {
         super(root, isSlim);
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new HeadExaltedAurumArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new HeadExaltedAurumArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -34,7 +34,7 @@ public class HeadExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMod
         head.addOrReplaceChild("head_r7", CubeListBuilder.create().texOffs(0, 1).mirror().addBox(-0.867F, -1.0884F, -1.0308F, 0.0F, 2.0F, 4.0F, CubeDeformation.NONE).mirror(false), PartPose.offsetAndRotation(-4.947F, -8.9003F, -1.3217F, 0.6055F, -0.5544F, -0.1178F));
         head.addOrReplaceChild("head_r8", CubeListBuilder.create().texOffs(0, -3).mirror().addBox(1.173F, -0.5402F, -2.8268F, 0.0F, 2.0F, 3.0F, CubeDeformation.NONE).mirror(false), PartPose.offsetAndRotation(4.947F, -8.9003F, -1.3217F, 0.3873F, 0.5544F, 0.1178F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

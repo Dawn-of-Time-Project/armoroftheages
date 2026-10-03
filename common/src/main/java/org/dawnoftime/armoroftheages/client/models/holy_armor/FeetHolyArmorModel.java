@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class FeetHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class FeetHolyArmorModel extends ArmorModel {
     private final ModelPart legLeftWing;
     private final ModelPart legRightWing;
 
@@ -17,8 +17,8 @@ public class FeetHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new FeetHolyArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new FeetHolyArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -38,7 +38,7 @@ public class FeetHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
                 .texOffs(0, 6).addBox(-3.0F, 5.8F, -1.1F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.9F, 12.0F, 0.0F));
 
         leg_right.addOrReplaceChild("leg_right_wing", CubeListBuilder.create().texOffs(0, 55).mirror().addBox(0.0F, -2.3F, 0.0F, 0.0F, 3.0F, 5.0F, CubeDeformation.NONE).mirror(false), PartPose.offsetAndRotation(-2.501F, 6.3F, -1.6F, -0.1745F, -0.3054F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 128, 128);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 128);
     }
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestIronPlateArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestIronPlateArmorModel extends ArmorModel {
     private final ModelPart miscA;
 
     public ChestIronPlateArmorModel(ModelPart root, boolean isSlim) {
@@ -15,8 +15,8 @@ public class ChestIronPlateArmorModel<T extends LivingEntity> extends ArmorModel
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestIronPlateArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestIronPlateArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -82,7 +82,7 @@ public class ChestIronPlateArmorModel<T extends LivingEntity> extends ArmorModel
         rightShoulderA.addOrReplaceChild("rightShoulderC", CubeListBuilder.create()
                         .texOffs(0, 22).mirror(true).addBox(-1.5F, -1.3F, -3.0F, 2.0F, 2.0F, 6.0F),
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.1396F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -147,7 +147,7 @@ public class ChestIronPlateArmorModel<T extends LivingEntity> extends ArmorModel
         rightShoulderA.addOrReplaceChild("rightShoulderC", CubeListBuilder.create()
                         .texOffs(0, 22).mirror(true).addBox(-1.5F, -1.3F, -3.0F, 2.0F, 2.0F, 6.0F),
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.1396F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

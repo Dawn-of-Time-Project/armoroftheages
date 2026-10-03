@@ -10,9 +10,9 @@ import dev.isxander.yacl3.impl.controller.EnumControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.FloatFieldControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.IntegerFieldControllerBuilderImpl;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.dawnoftime.armoroftheages.CommonClass;
 import org.dawnoftime.armoroftheages.Constants;
 import org.dawnoftime.armoroftheages.client.patreon.ClientPatronState;
@@ -20,7 +20,7 @@ import org.dawnoftime.armoroftheages.client.patreon.ClientPatronState;
 public class AOTAConfig {
     public static ConfigClassHandler<AOTAConfig> CONFIG_CLASS_HANDLER = ConfigClassHandler
             .createBuilder(AOTAConfig.class)
-            .id(ResourceLocation.tryBuild(Constants.MOD_ID, "config"))
+            .id(Identifier.tryBuild(Constants.MOD_ID, "config"))
             .serializer(config -> GsonConfigSerializerBuilder
                     .create(config)
                     .setPath(Constants.CONFIG_PATH)

@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class LegsExaltedAurumArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class LegsExaltedAurumArmorModel extends ArmorModel {
     private final ModelPart beltFront;
     private final ModelPart beltBack;
 
@@ -17,8 +17,8 @@ public class LegsExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMod
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new LegsExaltedAurumArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new LegsExaltedAurumArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -48,7 +48,7 @@ public class LegsExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMod
         right_leg.addOrReplaceChild("RightLeg_r2", CubeListBuilder.create().texOffs(60, 30).addBox(-2.5F, -2.75F, -2.0F, 4.0F, 7.0F, 4.0F, new CubeDeformation(0.8F)),
                 PartPose.offsetAndRotation(-1.5744F, 2.2751F, 0.0F, 0.0F, 0.0F, 0.3578F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -77,7 +77,7 @@ public class LegsExaltedAurumArmorModel<T extends LivingEntity> extends ArmorMod
                 PartPose.offsetAndRotation(-0.9244F, 4.7751F, 0.0F, 0.0F, 0.0F, 0.4451F));
         right_leg.addOrReplaceChild("RightLeg_r2", CubeListBuilder.create().texOffs(60, 30).addBox(-2.5F, -2.75F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.8F)),
                 PartPose.offsetAndRotation(-1.4744F, 2.2751F, 0.0F, 0.0F, 0.0F, 0.6196F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

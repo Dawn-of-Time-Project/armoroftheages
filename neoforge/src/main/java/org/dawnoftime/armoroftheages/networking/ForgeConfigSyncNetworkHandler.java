@@ -3,6 +3,7 @@ package org.dawnoftime.armoroftheages.networking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.dawnoftime.armoroftheages.config.AOTAConfig;
 import org.dawnoftime.armoroftheages.config.PreferredModel;
@@ -26,8 +27,8 @@ public class ForgeConfigSyncNetworkHandler implements ConfigSyncNetworkHandler {
     @Override
     public void syncConfig() {
         if (Minecraft.getInstance().getConnection() != null) {
-            PacketDistributor.sendToServer(new PreferenceSyncPayload(AOTAConfig.get().preferredModel));
-            PacketDistributor.sendToServer(new SkinSyncPayload(
+            ClientPacketDistributor.sendToServer(new PreferenceSyncPayload(AOTAConfig.get().preferredModel));
+            ClientPacketDistributor.sendToServer(new SkinSyncPayload(
                 new SkinSyncState(AOTAConfig.get().oYoroiSkin, AOTAConfig.get().ironPlateSkin,
                     AOTAConfig.get().centurionSkin, AOTAConfig.get().raijinSkin, AOTAConfig.get().pharaohSkin)));
         }

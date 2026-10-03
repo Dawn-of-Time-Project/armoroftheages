@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestHolyArmorModel extends ArmorModel {
     private final ModelPart chestEffectFrontA;
     private final ModelPart chestEffectFrontB;
     private final ModelPart chestEffectBig;
@@ -42,8 +42,8 @@ public class ChestHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestHolyArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestHolyArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -85,7 +85,7 @@ public class ChestHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
         armLeft.addOrReplaceChild("armLeftEffect", CubeListBuilder.create().texOffs(34, 56).addBox(0.0F, -3.5F, -3.5F, 0.0F, 7.0F, 7.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0F, 5.0F, 0.0F, 0.0F, 0.0F, 1.0F));
         armLeft.addOrReplaceChild("armLeftEffectRotated", CubeListBuilder.create().texOffs(34, 56).addBox(0.0F, -3.5F, -3.5F, 0.0F, 7.0F, 7.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0F, 5.0F, 0.0F, -0.7854F, 0.0F, 1.0F));
 
-        return LayerDefinition.create(meshdefinition, 128, 128);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 128);
     }
 
 
@@ -128,7 +128,7 @@ public class ChestHolyArmorModel<T extends LivingEntity> extends ArmorModel<T> {
         armLeft.addOrReplaceChild("armLeftEffect", CubeListBuilder.create().texOffs(34, 56).addBox(0.0F, -3.5F, -3.5F, 0.0F, 7.0F, 7.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0F, 5.0F, 0.0F, 0.0F, 0.0F, 1.0F));
         armLeft.addOrReplaceChild("armLeftEffectRotated", CubeListBuilder.create().texOffs(34, 56).addBox(0.0F, -3.5F, -3.5F, 0.0F, 7.0F, 7.0F, new CubeDeformation(0.01F)), PartPose.offsetAndRotation(3.0F, 5.0F, 0.0F, -0.7854F, 0.0F, 1.0F));
 
-        return LayerDefinition.create(meshdefinition, 128, 128);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 128);
     }
 
 

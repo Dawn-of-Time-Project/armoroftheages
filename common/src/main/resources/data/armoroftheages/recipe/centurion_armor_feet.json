@@ -1,22 +1,16 @@
 {
-	"type": "minecraft:crafting_shaped",
-	"category": "equipment",
-	"pattern": [
-		"ixi",
-		"I I"
-	],
-	"key": {
-		"I": {
-			"item": "minecraft:leather"
-		},
-		"i": {
-			"item": "minecraft:gold_ingot"
-		},
-		"x": {
-			"item": "minecraft:iron_boots"
-		}
-	},
-	"result": {
-		"id": "armoroftheages:centurion_armor_feet"
-	}
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ixi",
+    "I I"
+  ],
+  "key": {
+    "I": "minecraft:leather",
+    "i": "minecraft:gold_ingot",
+    "x": "minecraft:iron_boots"
+  },
+  "result": {
+    "id": "armoroftheages:centurion_armor_feet"
+  }
 }

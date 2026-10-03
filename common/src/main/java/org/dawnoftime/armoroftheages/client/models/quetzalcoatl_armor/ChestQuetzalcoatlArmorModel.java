@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestQuetzalcoatlArmorModel extends ArmorModel {
     private final ModelPart tail;
     private final ModelPart tailTip;
     private final ModelPart armFeather;
@@ -31,8 +31,8 @@ public class ChestQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorMo
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestQuetzalcoatlArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestQuetzalcoatlArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -215,7 +215,7 @@ public class ChestQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorMo
                         .addBox(0.15F, -5.0F, -3.5F, 0.0F, 10.0F, 7.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(3.75F, 5.5F, 1.0F, 0.0F, 0.0873F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -403,7 +403,7 @@ public class ChestQuetzalcoatlArmorModel<T extends LivingEntity> extends ArmorMo
                         .texOffs(36, 19)
                         .addBox(0.15F, -5.0F, -3.5F, 0.0F, 10.0F, 7.0F, CubeDeformation.NONE),
                 PartPose.offsetAndRotation(2.75F, 5.5F, 1.0F, 0.0F, 0.0873F, 0.0F));
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override

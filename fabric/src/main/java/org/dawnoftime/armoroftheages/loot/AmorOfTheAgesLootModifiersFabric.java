@@ -2,7 +2,7 @@ package org.dawnoftime.armoroftheages.loot;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -21,7 +21,7 @@ public class AmorOfTheAgesLootModifiersFabric {
 
     public static void modifyLootTables() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            switch (key.location().toString()) {
+            switch (key.identifier().toString()) {
                 case LootTablesToModify.ABANDONED_MINESHAFT,
                      LootTablesToModify.SHIPWRECK_SUPPLY,
                      LootTablesToModify.VILLAGE_TAIGA_HOUSE -> buildLootTable(Constants.BAMBOO_HAT_NAME, 1.0f, 0.35f, tableBuilder);
@@ -47,7 +47,7 @@ public class AmorOfTheAgesLootModifiersFabric {
         boolean shouldGenerate = LootTablesToModify.ARMOR_GENERATION_MAP.getOrDefault(armorSetName, false);
 
         if (AOTAConfig.get().generateArmorLoot && shouldGenerate) {
-            List<ResourceLocation> armorPieceLocations = ArmorOfTheAgesFabric.ItemRegistryImpl
+            List<Identifier> armorPieceLocations = ArmorOfTheAgesFabric.ItemRegistryImpl
                     .ARMORS_LOCATION_FROM_NAME
                     .get(armorSetName);
 
@@ -56,7 +56,7 @@ public class AmorOfTheAgesLootModifiersFabric {
                     .conditionally(LootItemRandomChanceCondition.randomChance(probability).build());
 
             for (var armorPieceLocation : armorPieceLocations) {
-                Item armorPieceItem = BuiltInRegistries.ITEM.get(armorPieceLocation);
+                Item armorPieceItem = BuiltInRegistries.ITEM.getValue(armorPieceLocation);
 
                 poolBuilder.with(LootItem.lootTableItem(armorPieceItem)
                                 .setWeight(1)

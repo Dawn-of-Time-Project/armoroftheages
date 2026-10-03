@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class LegsRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class LegsRaijinArmorModel extends ArmorModel {
     private final ModelPart chestBeltHangA;
     private final ModelPart chestBeltHangB;
 
@@ -17,8 +17,8 @@ public class LegsRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> 
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new LegsRaijinArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new LegsRaijinArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -83,7 +83,7 @@ public class LegsRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> 
         right_leg.addOrReplaceChild("legRightPantTop", CubeListBuilder.create()
                         .texOffs(35, 7).addBox(-2.5F, -1.0F, -2.5F, 5.0F, 6.0F, 5.0F, CubeDeformation.NONE),
                 PartPose.ZERO);
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -148,7 +148,7 @@ public class LegsRaijinArmorModel<T extends LivingEntity> extends ArmorModel<T> 
         right_leg.addOrReplaceChild("legRightPantTop", CubeListBuilder.create()
                         .texOffs(35, 7).addBox(-2.5F, -1.0F, -2.5F, 5.0F, 4.0F, 5.0F, CubeDeformation.NONE),
                 PartPose.ZERO);
-        return LayerDefinition.create(meshdefinition, 64, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 64, 64);
     }
 
     @Override

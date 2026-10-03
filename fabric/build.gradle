@@ -39,20 +39,16 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
-    modImplementation "maven.modrinth:modmenu:YIfqIJ8q"
-    modImplementation "curse.maven:jei-238222:7014280"
-
-    modImplementation "maven.modrinth:cosmetic-armor-revitalized-fabric:1.7.0"
-    modImplementation "dev.emi:trinkets:3.10.0"
+    modImplementation "maven.modrinth:modmenu:cLkYaVuL" // Mod Menu 17.0.1
+    modImplementation "maven.modrinth:jei:EBKA0ETW" // JEI 27.44.0.104
+    modImplementation "maven.modrinth:mezzconfig:LXjuO11M" // MezzConfig 0.6.8, required by JEI on Fabric
+    // Cosmetic Armor Revitalized and Trinkets have no 1.21.11 release, dependencies removed
 }
 
 loom {
     def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) {
         accessWidenerPath.set(aw)
-    }
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
     }
     runs {
         client {

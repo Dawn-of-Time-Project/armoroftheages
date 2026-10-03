@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.dawnoftime.armoroftheages.client.models.ArmorModel;
 
-public class ChestAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T> {
+public class ChestAnubisArmorModel extends ArmorModel {
     private final ModelPart collarBack;
     private final ModelPart crossA;
     private final ModelPart crossB;
@@ -23,8 +23,8 @@ public class ChestAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T>
     }
 
     @Override
-    public <E extends LivingEntity> ArmorModel<E> create(ModelPart root, boolean isSlim) {
-        return new ChestAnubisArmorModel<>(root, isSlim);
+    public ArmorModel create(ModelPart root, boolean isSlim) {
+        return new ChestAnubisArmorModel(root, isSlim);
     }
 
     public static LayerDefinition createLayerDefinition() {
@@ -74,7 +74,7 @@ public class ChestAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T>
                 .texOffs(25, 0).addBox(-0.5F, -0.5F, -3.0F, 1.0F, 1.0F, 1.0F)
                 .texOffs(18, 16).addBox(-1.0F, -6.0F, -3.0F, 4.0F, 9.0F, 6.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(2.25F, -0.75F, 0.0F, 0.0F, 0.0F, 0.1745F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     public static LayerDefinition createSlimLayerDefinition() {
@@ -124,7 +124,7 @@ public class ChestAnubisArmorModel<T extends LivingEntity> extends ArmorModel<T>
                 .texOffs(25, 0).addBox(-0.5F, -0.5F, -3.0F, 1.0F, 1.0F, 1.0F, CubeDeformation.NONE)
                 .texOffs(18, 16).addBox(-1.0F, -6.0F, -3.0F, 4.0F, 9.0F, 6.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(1.25F, -0.75F, 0.0F, 0.0F, 0.0F, 0.1745F));
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(ensureHat(meshdefinition), 128, 64);
     }
 
     @Override
