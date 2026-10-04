@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
@@ -33,7 +33,7 @@ import static org.dawnoftime.armoroftheages.Constants.MOD_ID;
 
 public class ArmorOfTheAgesFabric implements ModInitializer {
 
-    private static final CreativeModeTab CREATIVE_MODE_TAB = FabricItemGroup.builder()
+    private static final CreativeModeTab CREATIVE_MODE_TAB = FabricCreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + MOD_ID))
             .icon(() -> ItemRegistry.REGISTRY.TAB_ICON.get().getDefaultInstance())
             .displayItems((params, output) -> output.acceptAll(ItemRegistryImpl.ITEMS.stream().filter(item -> item != ItemRegistry.REGISTRY.TAB_ICON.get()).map(Item::getDefaultInstance).toList()))

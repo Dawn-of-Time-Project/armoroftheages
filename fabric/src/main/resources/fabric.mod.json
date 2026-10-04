@@ -29,10 +29,10 @@
     ],
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
-        "fabric": "*",
+        "fabric-api": "*",
         "yet_another_config_lib_v3": "*",
-        "minecraft": "${minecraft_version}",
-        "java": ">=21"
+        "minecraft": "~${minecraft_version}",
+        "java": ">=${java_version}"
     },
     "suggests": {
         "another-mod": "*"

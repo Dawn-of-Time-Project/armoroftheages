@@ -1,6 +1,6 @@
 plugins {
     id 'multiloader-loader'
-    id 'fabric-loom'
+    id 'net.fabricmc.fabric-loom'
     id 'me.modmuss50.mod-publish-plugin'
 }
 
@@ -24,25 +24,17 @@ repositories {
         name = "Ladysnake Libs"
         url = 'https://maven.ladysnake.org/releases'
     }
-    maven {
-        name = "CurseMaven"
-        url = "https://cursemaven.com"
-    }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
-    }
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
-    modImplementation "maven.modrinth:modmenu:cLkYaVuL" // Mod Menu 17.0.1
-    modImplementation "maven.modrinth:jei:EBKA0ETW" // JEI 27.44.0.104
-    modImplementation "maven.modrinth:mezzconfig:LXjuO11M" // MezzConfig 0.6.8, required by JEI on Fabric
-    // Cosmetic Armor Revitalized and Trinkets have no 1.21.11 release, dependencies removed
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
+    implementation "maven.modrinth:modmenu:ZJ6YTrMY" // Mod Menu 18.0.2
+    implementation "maven.modrinth:jei:jZ7OgHsw" // JEI 29.34.0.90
+    implementation "maven.modrinth:mezzconfig:H7JmEX05" // MezzConfig 0.6.8, required by JEI on Fabric
+    // Cosmetic Armor Revitalized and Trinkets have no 26.1.2 release, dependencies removed
 }
 
 loom {
@@ -67,6 +59,6 @@ loom {
 }
 
 publishMods {
-    file = remapJar.archiveFile
+    file = jar.archiveFile
     modLoaders.add("fabric")
 }

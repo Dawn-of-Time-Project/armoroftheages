@@ -53,14 +53,13 @@ public class AmorOfTheAgesLootModifiersFabric {
 
             LootPool.Builder poolBuilder = LootPool.lootPool()
                     .setRolls(ConstantValue.exactly(1f))
-                    .conditionally(LootItemRandomChanceCondition.randomChance(probability).build());
+                    .when(LootItemRandomChanceCondition.randomChance(probability));
 
             for (var armorPieceLocation : armorPieceLocations) {
                 Item armorPieceItem = BuiltInRegistries.ITEM.getValue(armorPieceLocation);
 
-                poolBuilder.with(LootItem.lootTableItem(armorPieceItem)
-                                .setWeight(1)
-                                .build())
+                poolBuilder.add(LootItem.lootTableItem(armorPieceItem)
+                                .setWeight(1))
                         .apply(SetItemDamageFunction.setDamage(ConstantValue.exactly(damage)))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)));
             }

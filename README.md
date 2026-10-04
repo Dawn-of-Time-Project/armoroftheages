@@ -171,6 +171,7 @@ Minecraft logs a warning and skips the recipe. The game loads normally, this is 
 - Development and armor skins by **TheGoldenWorld**.
 - Special thanks to **mr_ch0c0late** for the Centurion armor and some extra resources.
 - Special thanks to **Hahdrim** for the Iron Plate armor.
+- Special thanks to **Aldahel** for the Exalted Aurum armor.
 - [Minecraft Title Generator](https://ewanhowell.com/plugins/minecraft-title-generator/) by Ewan Howell was used for the project name. [Support this guy](https://ko-fi.com/ewanhowell), he's a hero.
 
 Armor of the Ages is released under the [MIT License](LICENSE.md).

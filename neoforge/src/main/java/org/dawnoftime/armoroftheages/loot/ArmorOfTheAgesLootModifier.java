@@ -40,7 +40,11 @@ public class ArmorOfTheAgesLootModifier extends LootModifier {
     private final Random RANDOM = new Random();
 
     public ArmorOfTheAgesLootModifier(LootItemCondition[] conditionsIn, String armorSetName, float state) {
-        super(conditionsIn);
+        this(conditionsIn, IGlobalLootModifier.DEFAULT_PRIORITY, armorSetName, state);
+    }
+
+    public ArmorOfTheAgesLootModifier(LootItemCondition[] conditionsIn, int priority, String armorSetName, float state) {
+        super(conditionsIn, priority);
         this.armorSetName = armorSetName;
         this.state = state;
     }

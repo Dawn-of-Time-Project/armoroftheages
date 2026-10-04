@@ -56,13 +56,13 @@ public class FabricConfigSyncNetworkHandler implements ConfigSyncNetworkHandler 
 
     @Override
     public void setup() {
-        PayloadTypeRegistry.playS2C().register(GlobalPreferenceSyncPayload.TYPE, GlobalPreferenceSyncPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(PreferenceSyncPayload.TYPE, PreferenceSyncPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(DisablePreferencesPayload.TYPE, DisablePreferencesPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(GlobalSkinSyncPayload.TYPE, GlobalSkinSyncPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(SkinSyncPayload.TYPE, SkinSyncPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(DisableSkinSyncPayload.TYPE, DisableSkinSyncPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(PatronTierPayload.TYPE, PatronTierPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(GlobalPreferenceSyncPayload.TYPE, GlobalPreferenceSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(PreferenceSyncPayload.TYPE, PreferenceSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(DisablePreferencesPayload.TYPE, DisablePreferencesPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(GlobalSkinSyncPayload.TYPE, GlobalSkinSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(SkinSyncPayload.TYPE, SkinSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(DisableSkinSyncPayload.TYPE, DisableSkinSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(PatronTierPayload.TYPE, PatronTierPayload.STREAM_CODEC);
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             ClientPlayNetworking.registerGlobalReceiver(GlobalPreferenceSyncPayload.TYPE, (payload, context) -> {

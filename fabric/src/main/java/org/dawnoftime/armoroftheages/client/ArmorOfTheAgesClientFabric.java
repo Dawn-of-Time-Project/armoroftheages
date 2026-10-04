@@ -2,7 +2,7 @@ package org.dawnoftime.armoroftheages.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.Minecraft;
 import org.dawnoftime.armoroftheages.CommonClass;
 import org.dawnoftime.armoroftheages.registry.ModelProviderRegistry;
@@ -22,9 +22,9 @@ public class ArmorOfTheAgesClientFabric implements ClientModInitializer {
      */
     public static void registerLayerDefinitions() {
         ModelProviderRegistry.REGISTRY.forEach((name, provider) -> {
-            EntityModelLayerRegistry.registerModelLayer(provider.getLayerLocation(), provider::createLayer);
+            ModelLayerRegistry.registerModelLayer(provider.getLayerLocation(), provider::createLayer);
             if(provider instanceof ArmorModelProvider.MixedArmorModelProvider slimProvide){
-                EntityModelLayerRegistry.registerModelLayer(slimProvide.getSlimLayerLocation(), slimProvide::createSlimLayer);
+                ModelLayerRegistry.registerModelLayer(slimProvide.getSlimLayerLocation(), slimProvide::createSlimLayer);
             }
         });
     }
