@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armoroftheages:centurion_armor_legs"
+        "recipes": ["armoroftheages:centurion_armor_legs"]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

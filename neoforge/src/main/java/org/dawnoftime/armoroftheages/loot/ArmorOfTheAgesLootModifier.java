@@ -5,15 +5,15 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.dawnoftime.armoroftheages.ArmorOfTheAgesForge;
@@ -21,6 +21,7 @@ import org.dawnoftime.armoroftheages.config.AOTAConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -35,15 +36,19 @@ public class ArmorOfTheAgesLootModifier extends LootModifier {
     );
 
 
+    public static Optional<Holder<LootItemCondition>> allOf(LootItemCondition.Builder... terms) {
+        return Optional.of(Holder.direct(AllOfCondition.allOf(terms).build()));
+    }
+
     private final String armorSetName;
     private final float state;
     private final Random RANDOM = new Random();
 
-    public ArmorOfTheAgesLootModifier(LootItemCondition[] conditionsIn, String armorSetName, float state) {
+    public ArmorOfTheAgesLootModifier(Optional<Holder<LootItemCondition>> conditionsIn, String armorSetName, float state) {
         this(conditionsIn, IGlobalLootModifier.DEFAULT_PRIORITY, armorSetName, state);
     }
 
-    public ArmorOfTheAgesLootModifier(LootItemCondition[] conditionsIn, int priority, String armorSetName, float state) {
+    public ArmorOfTheAgesLootModifier(Optional<Holder<LootItemCondition>> conditionsIn, int priority, String armorSetName, float state) {
         super(conditionsIn, priority);
         this.armorSetName = armorSetName;
         this.state = state;
@@ -51,10 +56,6 @@ public class ArmorOfTheAgesLootModifier extends LootModifier {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-        for (LootItemCondition condition : this.conditions)
-            if (!condition.test(lootContext))
-                return generatedLoot;
-
         boolean shouldGenerate = LootTablesToModify.ARMOR_GENERATION_MAP.getOrDefault(armorSetName, false);
 
         if (AOTAConfig.get().generateArmorLoot && shouldGenerate) {
@@ -73,10 +74,9 @@ public class ArmorOfTheAgesLootModifier extends LootModifier {
 
     public ItemStack addDamage(ItemStack itemStack, LootContext lootContext) {
         if (itemStack.isDamageableItem()) {
-            NumberProvider damage = ConstantValue.exactly(state);
             int i = itemStack.getMaxDamage();
             float f = 0.0F;
-            float g = 1.0F - Mth.clamp(damage.getFloat(lootContext) + f, 0.0F, 1.0F);
+            float g = 1.0F - Mth.clamp(state + f, 0.0F, 1.0F);
             itemStack.setDamageValue(Mth.floor(g * (float)i));
         }
 

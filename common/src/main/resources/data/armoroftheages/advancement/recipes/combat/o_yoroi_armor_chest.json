@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armoroftheages:o_yoroi_armor_chest"
+        "recipes": ["armoroftheages:o_yoroi_armor_chest"]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

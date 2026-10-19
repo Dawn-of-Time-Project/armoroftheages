@@ -31,10 +31,10 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
-    implementation "maven.modrinth:modmenu:ZJ6YTrMY" // Mod Menu 18.0.2
-    implementation "maven.modrinth:jei:jZ7OgHsw" // JEI 29.34.0.90
-    implementation "maven.modrinth:mezzconfig:H7JmEX05" // MezzConfig 0.6.8, required by JEI on Fabric
-    // Cosmetic Armor Revitalized and Trinkets have no 26.1.2 release, dependencies removed
+    implementation "maven.modrinth:modmenu:kyy7dbrZ" // Mod Menu 21.0.0
+    implementation "maven.modrinth:jei:Zebwcvua" // JEI 31.14.0.72
+    implementation "maven.modrinth:mezzconfig:GKiA7PV4" // MezzConfig 0.6.8, required by JEI on Fabric
+    // Cosmetic Armor Revitalized and Trinkets have no 26.3 release, dependencies removed
 }
 
 loom {

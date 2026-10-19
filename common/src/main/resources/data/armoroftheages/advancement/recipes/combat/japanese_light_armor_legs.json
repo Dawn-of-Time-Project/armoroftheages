@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armoroftheages:japanese_light_armor_legs"
+        "recipes": ["armoroftheages:japanese_light_armor_legs"]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

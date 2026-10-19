@@ -10,7 +10,6 @@ import dev.isxander.yacl3.impl.controller.EnumControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.FloatFieldControllerBuilderImpl;
 import dev.isxander.yacl3.impl.controller.IntegerFieldControllerBuilderImpl;
 import net.minecraft.ChatFormatting;
-import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.dawnoftime.armoroftheages.CommonClass;
@@ -1222,7 +1221,7 @@ public class AOTAConfig {
                                     .option(ButtonOption.createBuilder()
                                             .name(Component.translatable("config.armoroftheages.patreon_unlock_button"))
                                             .action((screen, opt) ->
-                                                    Util.getPlatform().openUri("https://www.patreon.com/dawnoftimemod"))
+                                                    com.mojang.blaze3d.Blaze3D.openUri(java.net.URI.create("https://www.patreon.com/dawnoftimemod")))
                                             .build()
                                     )
                                     .group(OptionGroup.createBuilder()

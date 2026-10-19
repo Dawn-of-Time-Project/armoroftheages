@@ -1,6 +1,7 @@
 package org.dawnoftime.armoroftheages.loot;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -10,7 +11,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
 import org.dawnoftime.armoroftheages.ArmorOfTheAgesFabric;
 import org.dawnoftime.armoroftheages.Constants;
 import org.dawnoftime.armoroftheages.config.AOTAConfig;
@@ -52,7 +55,7 @@ public class AmorOfTheAgesLootModifiersFabric {
                     .get(armorSetName);
 
             LootPool.Builder poolBuilder = LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1f))
+                    .setRolls(Holder.<ContextIntProvider>direct(new ConstantValue(1)))
                     .when(LootItemRandomChanceCondition.randomChance(probability));
 
             for (var armorPieceLocation : armorPieceLocations) {
@@ -60,8 +63,8 @@ public class AmorOfTheAgesLootModifiersFabric {
 
                 poolBuilder.add(LootItem.lootTableItem(armorPieceItem)
                                 .setWeight(1))
-                        .apply(SetItemDamageFunction.setDamage(ConstantValue.exactly(damage)))
-                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)));
+                        .apply(SetItemDamageFunction.setDamage(Holder.<ContextFloatProvider>direct(new net.minecraft.world.level.storage.loot.providers.number.floats.ConstantValue(damage))))
+                        .apply(SetItemCountFunction.setCount(Holder.<ContextIntProvider>direct(new ConstantValue(1))));
             }
 
             tableBuilder.pool(poolBuilder.build());

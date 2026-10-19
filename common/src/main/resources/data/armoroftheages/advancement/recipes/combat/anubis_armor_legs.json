@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armoroftheages:anubis_armor_legs"
+        "recipes": ["armoroftheages:anubis_armor_legs"]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

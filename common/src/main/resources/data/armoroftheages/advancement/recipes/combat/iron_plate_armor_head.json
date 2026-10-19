@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armoroftheages:iron_plate_armor_head"
+        "recipes": ["armoroftheages:iron_plate_armor_head"]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

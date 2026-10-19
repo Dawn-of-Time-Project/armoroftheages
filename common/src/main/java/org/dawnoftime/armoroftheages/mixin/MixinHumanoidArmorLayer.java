@@ -46,10 +46,10 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, M e
             if (provider != null) {
                 ArmorModel model = provider.getArmorModel(state);
                 collector.submitModel(model, state, poseStack, RenderTypes.armorCutoutNoCull(provider.getTexture(state)),
-                        packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+                        packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor);
                 if (itemStack.hasFoil()) {
-                    collector.submitModel(model, state, poseStack, RenderTypes.armorEntityGlint(),
-                            packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+                    collector.submitModel(model, state, poseStack, RenderTypes.armorCutoutNoCullGlint(provider.getTexture(state)),
+                            packedLight, OverlayTexture.NO_OVERLAY, state.outlineColor);
                 }
             }
         }

@@ -51,9 +51,8 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation "maven.modrinth:jei:AisPQmQz" // JEI 29.34.0.90
-    implementation "thedarkcolour:kotlinforforge-neoforge:6.3.0"
-    // Epic Fight has no 26.1.2 release yet, dependency removed
+    implementation "maven.modrinth:jei:kLsKOFxv" // JEI 31.14.0.72
+    // Epic Fight has no 26.3 release yet, dependency removed
     implementation ("dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge")
 }
 

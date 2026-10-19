@@ -2,14 +2,17 @@
   "type": "armoroftheages:add_item",
   "armor_name": "raijin_armor",
   "armor_state": 0.7,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/bastion_treasure"
-    },
-    {
-      "chance": 1.0,
-      "condition": "minecraft:random_chance"
-    }
-  ]
+  "condition": {
+    "type": "minecraft:all_of",
+    "terms": [
+      {
+        "type": "neoforge:loot_table_id",
+        "loot_table_id": "minecraft:chests/bastion_treasure"
+      },
+      {
+        "chance": 1.0,
+        "type": "minecraft:random_chance"
+      }
+    ]
+  }
 }

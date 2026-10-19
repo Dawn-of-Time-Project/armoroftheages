@@ -21,10 +21,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
     protected void start() {
         add("bamboo_hat_in_mineshaft",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.ABANDONED_MINESHAFT)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.35f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.ABANDONED_MINESHAFT)),
+                                LootItemRandomChanceCondition.randomChance(0.35f)
+                        ),
                         Constants.BAMBOO_HAT_NAME,
                         1.0f
                 )
@@ -32,10 +32,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("bamboo_hat_in_shipwreck_supply",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SHIPWRECK_SUPPLY)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.35f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SHIPWRECK_SUPPLY)),
+                                LootItemRandomChanceCondition.randomChance(0.35f)
+                        ),
                         Constants.BAMBOO_HAT_NAME,
                         1.0f
                 )
@@ -43,10 +43,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("bamboo_hat_in_village_taiga_house",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_TAIGA_HOUSE)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.35f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_TAIGA_HOUSE)),
+                                LootItemRandomChanceCondition.randomChance(0.35f)
+                        ),
                         Constants.BAMBOO_HAT_NAME,
                         1.0f
                 )
@@ -54,10 +54,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("japanese_light_in_simple_dungeon",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SIMPLE_DUNGEON)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.5f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SIMPLE_DUNGEON)),
+                                LootItemRandomChanceCondition.randomChance(0.5f)
+                        ),
                         Constants.JAPANESE_LIGHT_ARMOR_NAME,
                         0.5f
                 )
@@ -65,10 +65,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("iron_plate_in_simple_dungeon",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SIMPLE_DUNGEON)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.35f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SIMPLE_DUNGEON)),
+                                LootItemRandomChanceCondition.randomChance(0.35f)
+                        ),
                         Constants.IRON_PLATE_ARMOR_NAME,
                         0.25f
                 )
@@ -76,10 +76,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("japanese_light_in_village_weaponsmith",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_WEAPONSMITH)).build(),
-                                LootItemRandomChanceCondition.randomChance(1.0f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_WEAPONSMITH)),
+                                LootItemRandomChanceCondition.randomChance(1.0f)
+                        ),
                         Constants.JAPANESE_LIGHT_ARMOR_NAME,
                         0.7f
                 )
@@ -87,10 +87,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("centurion_in_ruined_portal",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.RUINED_PORTAL)).build(),
-                                LootItemRandomChanceCondition.randomChance(1.0f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.RUINED_PORTAL)),
+                                LootItemRandomChanceCondition.randomChance(1.0f)
+                        ),
                         Constants.CENTURION_ARMOR_NAME,
                         0.15f
                 )
@@ -98,10 +98,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("iron_plate_in_village_armorer",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_ARMORER)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.5f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_ARMORER)),
+                                LootItemRandomChanceCondition.randomChance(0.5f)
+                        ),
                         Constants.IRON_PLATE_ARMOR_NAME,
                         0.15f
                 )
@@ -109,10 +109,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("o_yoroi_in_shipwreck_treasure",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SHIPWRECK_TREASURE)).build(),
-                                LootItemRandomChanceCondition.randomChance(1.0f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.SHIPWRECK_TREASURE)),
+                                LootItemRandomChanceCondition.randomChance(1.0f)
+                        ),
                         Constants.O_YOROI_ARMOR_NAME,
                         0.15f
                 )
@@ -120,10 +120,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("pharaoh_in_desert_pyramid",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.DESERT_PYRAMID)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.7f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.DESERT_PYRAMID)),
+                                LootItemRandomChanceCondition.randomChance(0.7f)
+                        ),
                         Constants.PHARAOH_ARMOR_NAME,
                         0.15f
                 )
@@ -131,10 +131,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("exalted_aurum_in_ancient_city",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.ANCIENT_CITY)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.35f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.ANCIENT_CITY)),
+                                LootItemRandomChanceCondition.randomChance(0.35f)
+                        ),
                         Constants.EXALTED_AURUM_ARMOR_NAME,
                         0.7f
                 )
@@ -142,10 +142,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("holy_in_village_temple",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_TEMPLE)).build(),
-                                LootItemRandomChanceCondition.randomChance(0.5f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.VILLAGE_TEMPLE)),
+                                LootItemRandomChanceCondition.randomChance(0.5f)
+                        ),
                         Constants.HOLY_ARMOR_NAME,
                         0.15f
                 )
@@ -153,10 +153,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("quetzalcoatl_in_jungle_temple",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.JUNGLE_TEMPLE)).build(),
-                                LootItemRandomChanceCondition.randomChance(1.0f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.JUNGLE_TEMPLE)),
+                                LootItemRandomChanceCondition.randomChance(1.0f)
+                        ),
                         Constants.QUETZALCOATL_ARMOR_NAME,
                         0.15f
                 )
@@ -164,10 +164,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
         add("raijin_in_bastion_treasure",
                 new ArmorOfTheAgesLootModifier(
-                        new LootItemCondition[] {
-                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.BASTION_TREASURE)).build(),
-                                LootItemRandomChanceCondition.randomChance(1.0f).build()
-                        },
+                        ArmorOfTheAgesLootModifier.allOf(
+                                LootTableIdCondition.builder(Identifier.parse(LootTablesToModify.BASTION_TREASURE)),
+                                LootItemRandomChanceCondition.randomChance(1.0f)
+                        ),
                         Constants.RAIJIN_ARMOR_NAME,
                         0.7f
                 )
